@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "wulin_permits"
   gem.require_paths = ["lib"]
   gem.version       = WulinPermits::VERSION
+  
+  gem.add_dependency 'wulin_master'
 end
