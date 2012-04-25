@@ -1,5 +1,3 @@
-require 'wulin_master'
-
 module WulinPermits
   module ScreenControllerExtension
     extend ActiveSupport::Concern
