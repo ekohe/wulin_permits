@@ -2,23 +2,13 @@ module WulinPermits
   module Helper
     extend ActiveSupport::Concern
     
-    included do |base|
-      WulinPermits.roles.each do |role|
-        base.class_eval <<-METHOD, __FILE__, __LINE__ + 1
-          def #{role.to_s}?                                    # def admin?
-            has_role?(:#{role})                                 #   has_role?(:admin)
-          end                                                  # end
-        METHOD
+    def method_missing(method_name, *args, &block)
+      if method_name =~ /(.*)\?$/ and (role = Role.find_by_name($1)) and args.blank?
+        UserRole.where(user_id: self.id).map(&:role).include? role.id
+      else
+        super(method_name, *args, &block)
       end
     end
-    
-    def user_roles
-      UserRole.where(:user_id => id)
-    end
-    
-    def has_role?(role)
-      user_roles.map(&:role).include?(WulinPermits.roles.index(role))
-    end
-    
+
   end
 end

@@ -5,10 +5,12 @@ class UserRoleGrid < WulinMaster::Grid
 
   path '/user_roles'
   
-  fill_window
-
-  # width '400px'
-  # height '160px'
-
-  column :human_role, :width => 200
+  width '500px'
+  height '250px'
+  
+  hide_header
+  
+  column :user_id, visible: false
+  column :roler_name, :width => 200
+  
 end
