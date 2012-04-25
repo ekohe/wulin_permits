@@ -9,7 +9,7 @@ class PermissionsRoleGrid < WulinMaster::Grid
 
   fill_window
   
-  column :role, visible: false
+  column :role_id, visible: false
   column :permission
   
   def unavailable?
