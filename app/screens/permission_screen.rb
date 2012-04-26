@@ -5,4 +5,8 @@ class PermissionScreen < WulinMaster::Screen
 
   grid PermissionGrid
   
+  def authorized?(user)
+    user.admin?
+  end
+  
 end

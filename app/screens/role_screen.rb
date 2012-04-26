@@ -5,4 +5,8 @@ class RoleScreen < WulinMaster::Screen
 
   grid RoleGrid
 
+  def authorized?(user)
+    user.admin?
+  end
+  
 end
