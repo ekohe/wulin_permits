@@ -6,4 +6,8 @@ class UserRole < ::ActiveRecord::Base
   
   delegate :name, to: :roler, prefix: true, allow_nil: true
   
+  def self.user_has_role?(user, role)
+    where(user_id: user.id).pluck(:role).uniq.include?(role.id)
+  end
+  
 end
