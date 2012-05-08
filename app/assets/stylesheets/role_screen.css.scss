@@ -1,0 +1,18 @@
+#action_btns {
+  display: none;
+  padding: 120px 10px 0;
+  vertical-align: top;
+  button {
+    display: block;
+    width: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    &.danger {
+      margin-top: 10px;
+    }
+  }
+}
+
+.user_role_icon {
+  background: image-url('user_role.png') no-repeat top center;
+}
