@@ -26,5 +26,3 @@ module WulinPermits
   
   module_function :admin, :admin=
 end
-
-require 'wulin_permits/extensions/screen'

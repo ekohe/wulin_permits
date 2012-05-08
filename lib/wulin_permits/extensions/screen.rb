@@ -30,6 +30,3 @@ module WulinPermits
   end
 end
 
-
-WulinMaster::Screen.send :include, WulinPermits::Extensions::Screen
-
