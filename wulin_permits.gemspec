@@ -16,4 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = WulinPermits::VERSION
   
   gem.add_dependency 'wulin_master'
+  gem.add_dependency 'wulin_oauth'
 end
