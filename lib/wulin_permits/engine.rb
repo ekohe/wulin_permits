@@ -14,6 +14,7 @@ module WulinPermits
       require 'wulin_permits/wulin_master/user_grid' unless defined? UserGrid
       require 'wulin_permits/wulin_master/user_screen' unless defined? UserScreen
       require 'wulin_permits/wulin_master/users_controller' unless defined? UsersController
+      WulinMaster::add_stylesheet 'user_role_toolbar.css'
     end
   end
 end
