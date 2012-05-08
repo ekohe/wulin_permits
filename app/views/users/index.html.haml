@@ -1,0 +1,59 @@
+= render :partial => '/grid', :locals => {:grid => controller.screen.grids.first}
+
+:javascript
+  $(function() {
+    var currentUser, userGrid = gridManager.getGrid('user');
+
+    $('<div/>').attr({'class': 'toolbar_item', 'id': 'user_role_botton'})
+    .append($('<a/>').attr('class', 'user_role_icon')
+    .append($('<span/>').html('Role')))
+    .appendTo($('#toolbar'));
+
+    userGrid.onActiveCellChanged.subscribe(function(e, args){
+      currentUser = this.loader.data[args.row];
+    });
+
+    $("#toolbar #user_role_botton").off('click', "**" ).on('click', function() {
+      if (currentUser) {
+        displayUserRolesPopup(currentUser);
+      } else {
+        displayErrorMessage('Select a user first!');
+      }
+    });
+    
+    
+    function displayUserRolesPopup(user) {
+      var ajaxOptions;
+      ajaxOptions = {
+        url: "/user_roles?user_id=" + user.id,
+        success: ajaxOnSuccess
+      };
+      return $.ajax(ajaxOptions).user = user;
+    };
+
+    function ajaxOnSuccess(data, textStatus, ajaxRequest) {
+      var dialogHtml, dialogOptions, user;
+      user = ajaxRequest.user;
+      dialogHtml = $("<div/>").attr('id', 'user_role').attr('title', 'User roles for ' + user.email).addClass('ui-state-highlight').css('display', 'none');
+      $('body').append(dialogHtml);
+      dialogHtml.append(data);
+      dialogOptions = {
+        autoOpen: true,
+        modal: true,
+        width: 600,
+        height: 500,
+        buttons: {
+          "Ok": function() {
+            $(this).dialog('close');
+            return $("#user_role").remove();
+          }
+        },
+        close: function() {
+          return $("#user_role").remove();
+        }
+      };
+      $('#user_role').dialog(dialogOptions);
+      return gridManager.getGrid('user').setSelectedRows([]);
+    };
+
+  })
