@@ -1,6 +1,7 @@
 # WulinPermits
 
-TODO: Write a gem description
+WulinPermits is for permission management. You can create roles and configuration permission for each role.
+And then you can assign role to user.
 
 ## Installation
 
@@ -18,7 +19,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+What you need to do is defind admin email for application in config/initializers
+
+like: 
+
+    # config/initializers/wulin_permits.rb
+    WulinPermits.admin = 'admin@explame.com'
 
 ## Contributing
 
