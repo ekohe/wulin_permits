@@ -1,10 +1,10 @@
 = render :partial => '/grid', :locals => {grid: controller.screen.grids.first}
 
-#available_wrapper(style="height: 100%; width: 600px; display: inline-block;")
+#available_wrapper(style="height: 100%; width: 45%; display: inline-block;")
 #action_btns
   = button_tag 'Add ❯❯', type: 'button', class: 'btn success', id: 'add_btn'
   = button_tag '❮❮ Remove', type: 'button', class: 'btn danger', id: 'remove_btn'
-#unavailable_wrapper(style="height: 100%; width: 600px; display: inline-block;")
+#unavailable_wrapper(style="height: 100%; width: 45%; display: inline-block;")
 
 = hidden_field_tag 'current_role_id'
 
