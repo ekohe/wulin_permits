@@ -27,6 +27,7 @@ module WulinPermits
           def has_permission_with_name?(permission_name)
             @has_permission_with_name ||= {}
             @has_permission_with_name[permission_name] ||= begin
+              return true if self.email == WulinPermits.admin
               has_permission?(Permission.find_or_create_by_name(permission_name))
             end
           end
