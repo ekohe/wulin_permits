@@ -8,6 +8,7 @@ module WulinPermits
           def authorized?(user)
             @authorized ||= {}
             @authorized[user] ||= begin
+              return true if user.email == WulinPermits.admin
               permission = Permission.find_or_create_by_name("#{name}#read")
               user.has_permission?(permission)
             end
@@ -16,6 +17,7 @@ module WulinPermits
           def authorize_create?(user)
             @authorize_create ||= {}
             @authorize_create[user] ||= begin
+              return true if user.email == WulinPermits.admin
               permission = Permission.find_or_create_by_name("#{name}#cud")
               user.has_permission?(permission)
             end

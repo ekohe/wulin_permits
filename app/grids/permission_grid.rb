@@ -25,7 +25,7 @@ class PermissionGrid < WulinMaster::Grid
   
   def style
     if available?
-      "height: 50%; width: 600px;"
+      "height: 50%; width: 100%;"
     else
       super
     end

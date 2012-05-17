@@ -26,7 +26,7 @@ class PermissionsRoleGrid < WulinMaster::Grid
   
   def style
     if unavailable?
-      "height: 50%; width: 600px;"
+      "height: 50%; width: 100%;"
     else
       super
     end
