@@ -5,7 +5,7 @@ class PermissionGrid < WulinMaster::Grid
 
   path '/permissions'
   
-  set_actions :filter 
+  action :filter 
 
   fill_window
 

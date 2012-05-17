@@ -9,4 +9,6 @@ class RoleGrid < WulinMaster::Grid
   height '50%'
 
   column :name
+  
+  load_default_actions
 end
