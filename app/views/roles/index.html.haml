@@ -33,7 +33,7 @@
           $('#grid_unavailable_permission .grid-header h2').html('Existing permissions');
 
           unavailableGrid = gridManager.getGrid('unavailable_permission');
-          ImportTools.resizeGrid(unavailableGrid);
+          Ui.resizeGrid(unavailableGrid);
           unavailableGrid.onActiveCellChanged.subscribe(function(e, args){
             $('#action_btns #add_btn').attr('disabled', 'disabled');
             $('#action_btns #remove_btn').removeAttr('disabled');
@@ -48,7 +48,7 @@
         var availableGrid;
         $('#available_wrapper').html(respond);
         availableGrid = gridManager.getGrid('available_permission');
-        ImportTools.resizeGrid(availableGrid);
+        Ui.resizeGrid(availableGrid);
         $('#grid_available_permission .grid').css('background-color', 'white');
         $('#grid_available_permission .grid-header h2').html('Available permissions');
         availableGrid.onActiveCellChanged.subscribe(function(e, args){
