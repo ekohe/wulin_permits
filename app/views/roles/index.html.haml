@@ -72,9 +72,9 @@
       availableGrid = gridManager.getGrid('available_permission');
       unavailableGrid = gridManager.getGrid('unavailable_permission');
       if (type == 'add') {
-        ids = Ui.selectIds(availableGrid);
+        ids = availableGrid.getSelectedIds().join();
       } else if (type == 'remove') {
-        ids = Ui.selectIds(unavailableGrid);
+        ids = unavailableGrid.getSelectedIds().join();
       }
       
       if (ids) {

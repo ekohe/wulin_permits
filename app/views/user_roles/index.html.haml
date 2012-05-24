@@ -35,7 +35,7 @@
     $('#delete_user_role .danger').off('click', '**').on('click', function(){
       var grid, ids;
       grid = gridManager.getGrid("user_role");
-      ids = Ui.selectIds(grid);
+      ids = grid.getSelectedIds().join();
       if (ids) {
         Requests.deleteByAjax(grid, ids);
       } else {
