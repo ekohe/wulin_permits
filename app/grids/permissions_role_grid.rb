@@ -8,6 +8,8 @@ class PermissionsRoleGrid < WulinMaster::Grid
   action :filter
 
   fill_window
+
+  cell_editable false
   
   column :role_id, visible: false
   column :permission

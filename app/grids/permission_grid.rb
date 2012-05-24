@@ -9,6 +9,8 @@ class PermissionGrid < WulinMaster::Grid
 
   fill_window
 
+  cell_editable false
+
   column :name, label: 'Permission'
 
   def available?

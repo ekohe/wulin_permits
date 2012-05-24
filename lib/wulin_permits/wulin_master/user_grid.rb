@@ -5,9 +5,11 @@ class UserGrid < WulinMaster::Grid
   
   fill_window
   
-  path '/users'    
+  path '/users' 
 
-  column :email, :width => 500, :editable => false
+  cell_editable false   
+
+  column :email, :width => 500
   
   action :filter
 end
