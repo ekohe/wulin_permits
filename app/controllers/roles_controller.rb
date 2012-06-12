@@ -1,6 +1,5 @@
 class RolesController < WulinMaster::ScreenController
   controller_for_screen RoleScreen
-  controller_for_grid RoleGrid
   
   def update_permission
     if (ids = params[:ids].split(',')).present? and params[:type].present? and Role.exists?(params[:role_id])

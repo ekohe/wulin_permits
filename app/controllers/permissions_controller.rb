@@ -1,6 +1,6 @@
 class PermissionsController < WulinMaster::ScreenController
   controller_for_screen PermissionScreen
-  controller_for_grid PermissionGrid
+
   add_callback :query_ready, :exclude_filter
   
   def exclude_filter

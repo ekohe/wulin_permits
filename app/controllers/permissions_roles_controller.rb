@@ -1,6 +1,6 @@
 class PermissionsRolesController < WulinMaster::ScreenController
   controller_for_screen PermissionsRoleScreen
-  controller_for_grid PermissionsRoleGrid
+
   add_callback :query_ready, :include_filter
   
   def include_filter
