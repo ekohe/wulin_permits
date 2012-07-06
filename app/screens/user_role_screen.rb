@@ -3,7 +3,7 @@ class UserRoleScreen < WulinMaster::Screen
 
   path '/user_roles'
 
-  grid UserRoleGrid
+  grid UserRoleGrid, width: '500px', height: '250px'
   
   def authorized?(user)
     user.admin?
