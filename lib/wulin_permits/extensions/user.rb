@@ -9,7 +9,7 @@ module WulinPermits
           # Override the existing +admin?+ method
           def admin?
             @admin ||= begin
-              return true if self.respond_to?(:admin?) && self.admin?
+              # return true if self.respond_to?(:admin?) && self.admin?
 
               role = Role.find_by_name('admin')
               UserRole.user_has_role?(self, role)
