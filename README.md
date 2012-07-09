@@ -21,10 +21,6 @@ Or install it yourself as:
 
 What you need to do is defind admin email for application in config/initializers
 
-like: 
-
-    # config/initializers/wulin_permits.rb
-    WulinPermits.admin = 'admin@explame.com'
 
 ## Contributing
 

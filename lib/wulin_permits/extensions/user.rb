@@ -9,7 +9,7 @@ module WulinPermits
           # Override the existing +admin?+ method
           def admin?
             @admin ||= begin
-              return true if self.email == WulinPermits.admin
+              return true if self.respond_to?(:admin?) && self.admin?
 
               role = Role.find_by_name('admin')
               UserRole.user_has_role?(self, role)
@@ -19,7 +19,7 @@ module WulinPermits
           def has_permission?(permission)
             @has_permission ||= {}
             @has_permission[permission] ||= begin
-              return true if self.email == WulinPermits.admin
+              return true if self.respond_to?(:admin?) && self.admin?
               !permission.user_roles.where(user_id: self.id).count.zero?
             end
           end
@@ -27,7 +27,7 @@ module WulinPermits
           def has_permission_with_name?(permission_name)
             @has_permission_with_name ||= {}
             @has_permission_with_name[permission_name] ||= begin
-              return true if self.email == WulinPermits.admin
+              return true if self.respond_to?(:admin?) && self.admin?
               has_permission?(Permission.find_or_create_by_name(permission_name))
             end
           end
