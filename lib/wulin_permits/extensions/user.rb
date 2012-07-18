@@ -7,14 +7,14 @@ module WulinPermits
 
         class_eval do
           # Override the existing +admin?+ method
-          def admin?
-            @admin ||= begin
-              # return true if self.respond_to?(:admin?) && self.admin?
-
-              role = Role.find_by_name('admin')
-              UserRole.user_has_role?(self, role)
-            end
-          end
+          # def admin?
+          #   @admin ||= begin
+          #     # return true if self.respond_to?(:admin?) && self.admin?
+          # 
+          #     role = Role.where("UPPER(services.code) = (?)", 'admin').first #Role.find_by_name('admin')
+          #     UserRole.user_has_role?(self, role)
+          #   end
+          # end
           
           def has_permission?(permission)
             @has_permission ||= {}
