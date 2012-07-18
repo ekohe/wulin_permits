@@ -25,6 +25,9 @@
           grid = gridManager.getGrid("user_role");
           grid.loader.addFilter('user_id', '#{params[:user_id]}');
           $('#user_role_role option[value="' + $('#user_role_role').val() + '"]').remove();
+          if ($('#user_role_role option[value!=""]').size() == 0) {
+            $('form#new_user_role .success').attr("disabled", "disabled");
+          }
         } else {
           displayErrorMessage('Add role to user failed!');
         }
