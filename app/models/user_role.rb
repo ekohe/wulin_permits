@@ -1,4 +1,5 @@
 class UserRole < ::ActiveRecord::Base
+  attr_accessible :role
   belongs_to :roler, foreign_key: 'role', class_name: 'Role'
   has_many :permissions, through: :role
   

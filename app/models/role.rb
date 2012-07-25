@@ -1,4 +1,5 @@
 class Role < ::ActiveRecord::Base
+  attr_accessible :name
   validates :name, presence: true
   has_many :user_roles, foreign_key: 'role'
   has_many :permissions_roles, dependent: :destroy
