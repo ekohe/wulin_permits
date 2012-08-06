@@ -36,8 +36,9 @@ module WulinPermits
       end
 
       def method_missing(method_name, *args, &block)
-        if method_name =~ /(.*)\?$/ and (role = Role.find_by_name($1)) and args.blank?
-          self.class.send(:define_method, method_name, proc { UserRole.user_has_role?(self, role) } )
+        if method_name =~ /(.*)\?$/ and (role = (Role.find_by_name($1) || Role.find_by_name($1.titleize))) and args.blank?
+          #self.class.send(:define_method, method_name, proc { UserRole.user_has_role?(self, role) } )
+          UserRole.user_has_role?(self, role)
         else
           super(method_name, *args, &block)
         end
