@@ -5,7 +5,8 @@ class PermissionGrid < WulinMaster::Grid
   
   cell_editable false
   
-  action :filter 
+  action :filter
+  action :delete, only: [:PermissionScreen]
 
   column :name, label: 'Permission'
   column :roles, visible: false, editable: false, option_text_attribute: "id", only: [:RoleScreen]   # neccessary for exclusion relation
