@@ -5,6 +5,5 @@ class UserRoleGrid < WulinMaster::Grid
   
   hide_header
   
-  column :user_id, visible: false
   column :roler_name, :width => 200
 end
