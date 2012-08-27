@@ -1,7 +1,8 @@
-class UserRole < ::ActiveRecord::Base
-  attr_accessible :role, :user_id
+class RolesUser < ::ActiveRecord::Base
+  attr_accessible :role_id, :user_id
   
-  belongs_to :roler, foreign_key: 'role', class_name: 'Role'
+  belongs_to :role
+  belongs_to :user
   has_many :permissions, through: :role
   
   validates :user_id, :role, presence: true
@@ -11,6 +12,10 @@ class UserRole < ::ActiveRecord::Base
   def self.user_has_role?(user, role)
     return false if user.blank? or role.blank?
     where(user_id: user.id).pluck(:role).uniq.include?(role.id)
+  end
+  
+  def user
+    User.find(self.user_id)
   end
   
 end

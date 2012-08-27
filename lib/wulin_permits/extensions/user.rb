@@ -12,7 +12,7 @@ module WulinPermits
           #     # return true if self.respond_to?(:admin?) && self.admin?
           # 
           #     role = Role.where("UPPER(services.code) = (?)", 'admin').first #Role.find_by_name('admin')
-          #     UserRole.user_has_role?(self, role)
+          #     RolesUser.user_has_role?(self, role)
           #   end
           # end
           
@@ -20,7 +20,7 @@ module WulinPermits
             @has_permission ||= {}
             @has_permission[permission] ||= begin
               return true if self.respond_to?(:admin?) && self.admin?
-              !permission.user_roles.where(user_id: self.id).count.zero?
+              !permission.roles_users.where(user_id: self.id).count.zero?
             end
           end
           
@@ -37,9 +37,9 @@ module WulinPermits
 
       def method_missing(method_name, *args, &block)
         if method_name =~ /(.*)\?$/ and args.blank?
-          #self.class.send(:define_method, method_name, proc { UserRole.user_has_role?(self, role) } )
+          #self.class.send(:define_method, method_name, proc { RolesUser.user_has_role?(self, role) } )
           if (role = (Role.find_by_name($1) || Role.find_by_name($1.titleize)))
-            UserRole.user_has_role?(self, role)
+            RolesUser.user_has_role?(self, role)
           else
             false
           end

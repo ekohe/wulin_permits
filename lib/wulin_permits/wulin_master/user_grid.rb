@@ -3,7 +3,7 @@ class UserGrid < WulinMaster::Grid
 
   model User
   
-  fill_window
+  # fill_window
 
   multi_select false
   
@@ -11,6 +11,7 @@ class UserGrid < WulinMaster::Grid
 
   column :email, :width => 500
   
-  action :user_role, title: "Role", icon: 'user_role'
+  # action :roles_user, title: "Role", icon: 'roles_user'
   action :filter
+  action :excel
 end

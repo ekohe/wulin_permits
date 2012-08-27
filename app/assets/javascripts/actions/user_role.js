@@ -1,24 +1,24 @@
 // User grid toolbar item 'Role' button, add role to selected user
 
-WulinMaster.actions.UserRole = $.extend({}, WulinMaster.actions.BaseAction, {
-  name: 'user_role',
+WulinMaster.actions.RolesUser = $.extend({}, WulinMaster.actions.BaseAction, {
+  name: 'roles_user',
 
   handler: function() {
     var grid = this.getGrid();
 
     var rows = grid.getSelectedRows();
     if (rows.length > 0) {
-      this.displayUserRolesPopup(grid.getDataItem(rows[0]));
+      this.displayRolesUsersPopup(grid.getDataItem(rows[0]));
       return false;
     } else {
       displayErrorMessage("Please select an user.");
     }
   },
 
-  displayUserRolesPopup: function(user) {
+  displayRolesUsersPopup: function(user) {
     var self = this;
     var ajaxOptions = {
-      url: "/user_roles?screen=UserRoleScreen&user_id=" + user.id,
+      url: "/roles_users?screen=RolesUserScreen&user_id=" + user.id,
       success: self.ajaxOnSuccess
     };
     return $.ajax(ajaxOptions).user = user;
@@ -26,7 +26,7 @@ WulinMaster.actions.UserRole = $.extend({}, WulinMaster.actions.BaseAction, {
 
   ajaxOnSuccess: function(data, textStatus, ajaxRequest) {
     var user = ajaxRequest.user;
-    var dialogHtml = $("<div/>").attr('id', 'user_role').attr('title', 'User roles for ' + user.email).addClass('ui-state-highlight').css('display', 'none');
+    var dialogHtml = $("<div/>").attr('id', 'roles_user').attr('title', 'User roles for ' + user.email).addClass('ui-state-highlight').css('display', 'none');
     $('body').append(dialogHtml);
     dialogHtml.append(data);
 
@@ -38,16 +38,16 @@ WulinMaster.actions.UserRole = $.extend({}, WulinMaster.actions.BaseAction, {
       buttons: {
         "Ok": function() {
           $(this).dialog('close');
-          return $("#user_role").remove();
+          return $("#roles_user").remove();
         }
       },
       close: function() {
-        return $("#user_role").remove();
+        return $("#roles_user").remove();
       }
     };
-    $('#user_role').dialog(dialogOptions);
+    $('#roles_user').dialog(dialogOptions);
     return gridManager.getGrid('user').resetActiveCell();
   }
 });
 
-WulinMaster.ActionManager.register(WulinMaster.actions.UserRole);
+WulinMaster.ActionManager.register(WulinMaster.actions.RolesUser);

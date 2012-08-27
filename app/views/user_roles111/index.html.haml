@@ -1,7 +1,7 @@
 %h1 Add a new role
 
-- @user_role = UserRole.new
-= form_for @user_role, html: { style: 'margin: 0 0 20px 10px'} do |f|
+- @roles_user = RolesUser.new
+= form_for @roles_user, html: { style: 'margin: 0 0 20px 10px'} do |f|
   = f.hidden_field :user_id, {:value => params[:user_id].to_i}
   %p
     = f.label :role, 'Role: '
@@ -9,24 +9,24 @@
     = f.submit nil, class: 'btn success' 
   
 %h1 User Roles
-#user_role_wrapper(style='height: 250px; width: 500px;border: 1px solid #A5A5A5; margin: 0 0 10px 10px;')
+#roles_user_wrapper(style='height: 250px; width: 500px;border: 1px solid #A5A5A5; margin: 0 0 10px 10px;')
   = render :partial => '/grid', :locals => {grid: controller.screen.grids.first}
 
 
-#delete_user_role(style='margin: 0 0 10px 10px;')
+#delete_roles_user(style='margin: 0 0 10px 10px;')
   %button.btn.danger Delete
   
 :javascript
   $(function() {
-    $('form#new_user_role').off('submit', '**').on('submit', function(){
-      $.post('/user_roles.json', $(this).serialize() + "&authenticity_token=" + window._token, function(data) {
+    $('form#new_roles_user').off('submit', '**').on('submit', function(){
+      $.post('/roles_users.json', $(this).serialize() + "&authenticity_token=" + window._token, function(data) {
         var grid;
         if (data.success) {
-          grid = gridManager.getGrid("user_role");
+          grid = gridManager.getGrid("roles_user");
           grid.loader.addFilter('user_id', '#{params[:user_id]}');
-          $('#user_role_role option[value="' + $('#user_role_role').val() + '"]').remove();
-          if ($('#user_role_role option[value!=""]').size() == 0) {
-            $('form#new_user_role .success').attr("disabled", "disabled");
+          $('#roles_roles_user option[value="' + $('#roles_roles_user').val() + '"]').remove();
+          if ($('#roles_roles_user option[value!=""]').size() == 0) {
+            $('form#new_roles_user .success').attr("disabled", "disabled");
           }
         } else {
           displayErrorMessage('Add role to user failed!');
@@ -35,9 +35,9 @@
       return false;
     });
     
-    $('#delete_user_role .danger').off('click', '**').on('click', function(){
+    $('#delete_roles_user .danger').off('click', '**').on('click', function(){
       var grid, ids;
-      grid = gridManager.getGrid("user_role");
+      grid = gridManager.getGrid("roles_user");
       ids = grid.getSelectedIds().join();
       if (ids) {
         Requests.deleteByAjax(grid, ids);

@@ -26,7 +26,7 @@ module WulinPermits
         else
           create_permission("#{controller_name}##{action_name}")
         end
-        return unauthorized unless current_user.has_permission?(permission) #permission.user_roles.where(user_id: current_user.id).count.zero?
+        return unauthorized unless current_user.has_permission?(permission) #permission.roles_users.where(user_id: current_user.id).count.zero?
       end
       
 

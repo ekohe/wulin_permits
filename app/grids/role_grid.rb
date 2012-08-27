@@ -5,5 +5,9 @@ class RoleGrid < WulinMaster::Grid
 
   column :name
   
-  load_default_actions
+  # load_default_actions
+  # Common actions
+  action :filter
+  action :excel
+  action :audit
 end
