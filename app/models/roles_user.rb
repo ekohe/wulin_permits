@@ -11,7 +11,7 @@ class RolesUser < ::ActiveRecord::Base
   
   def self.user_has_role?(user, role)
     return false if user.blank? or role.blank?
-    where(user_id: user.id).pluck(:role).uniq.include?(role.id)
+    where(user_id: user.id).pluck(:role_id).uniq.include?(role.id)
   end
   
   def user
