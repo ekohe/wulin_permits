@@ -1,5 +1,5 @@
 class RoleScreen < WulinMaster::Screen
-  title 'Roles'
+  title 'Roles Permissions'
 
   path '/roles'
 
