@@ -1,7 +1,7 @@
 class Role < ::ActiveRecord::Base
   attr_accessible :name
   validates :name, presence: true
-  has_many :roles_users
+  has_many :roles_users, dependent: :destroy
   # has_many :users, through: :roles_users
   has_many :permissions_roles, dependent: :destroy
   has_many :permissions, through: :permissions_roles
