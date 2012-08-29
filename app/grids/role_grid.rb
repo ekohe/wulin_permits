@@ -5,9 +5,7 @@ class RoleGrid < WulinMaster::Grid
 
   column :name
   
-  # load_default_actions
-  # Common actions
-  action :filter
-  action :excel
-  action :audit
+  load_default_actions({only: [:MasterRoleDetailUserScreen]})
+
+  action :filter, only: [:AddRoleForUserScreen]
 end
