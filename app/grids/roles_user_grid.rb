@@ -15,7 +15,7 @@ class RolesUserGrid < WulinMaster::Grid
   action :delete, title: 'Remove Users', icon: 'unlink', only: [:MasterRoleDetailUserScreen]
   
   # Common actions
-  action :filter
+  # action :filter
   action :excel
   action :audit
 end
