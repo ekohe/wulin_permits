@@ -3,10 +3,9 @@ class PermissionGrid < WulinMaster::Grid
 
   model Permission
   
-  cell_editable false
-  
   action :filter
   action :delete, only: [:PermissionScreen]
 
-  column :name, label: 'Permission'
+  column :name, label: 'Permission', editable: false
+  column :description, width: 300
 end
