@@ -9,6 +9,8 @@ class RolesUsersController < WulinMaster::ScreenController
   protected
   
   def set_user_id_condition
+    return if params[:filters].blank?
+    
     user_filter_params = params[:filters].find{|x| x.values.include?("user_id")}
     return if user_filter_params.blank?
     
@@ -16,6 +18,8 @@ class RolesUsersController < WulinMaster::ScreenController
   end
   
   def set_role_id_condition
+    return if params[:filters].blank?
+    
     role_filter_params = params[:filters].find{|x| x.values.include?("role_id")}
     return if role_filter_params.blank?
     @query = grid.model.where(:role_id => role_filter_params[:value])
