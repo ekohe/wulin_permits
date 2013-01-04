@@ -17,7 +17,7 @@ if defined? WulinMaster
         if option[:controller].present? and option[:action].present?
           controller_name = option[:controller].include?("/") ? option[:controller].split("/").last : option[:controller]
           controller_name = controller_name.singularize
-          if %w(index new show edit update create destroy wulin_master_new_form wulin_master_edit_form).exclude? option[:action]
+          if %w(index new show edit update create destroy wulin_master_new_form wulin_master_option_new_form wulin_master_edit_form).exclude? option[:action]
             #   name = "#{controller_name}#cud"
             # elsif option[:action] == 'index'
             #   name = "#{controller_name}#read"
