@@ -3,7 +3,7 @@ class RolesUser < ::ActiveRecord::Base
   
   belongs_to :role
   belongs_to :user
-  has_many :permissions, through: :role
+  # has_many :permissions, through: :role
   
   validates :user_id, :role, presence: true
   
