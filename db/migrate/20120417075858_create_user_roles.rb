@@ -4,6 +4,6 @@ class CreateUserRoles < ActiveRecord::Migration
       t.integer :user_id
       t.integer :role
       t.timestamps
-    end
+    end unless table_exists?(:user_roles)
   end
 end

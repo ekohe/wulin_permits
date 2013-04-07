@@ -4,6 +4,6 @@ class CreateRoles < ActiveRecord::Migration
       t.string :name
 
       t.timestamps
-    end
+    end unless table_exists?(:roles)
   end
 end

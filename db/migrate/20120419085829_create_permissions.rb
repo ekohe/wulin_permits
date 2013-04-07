@@ -4,12 +4,12 @@ class CreatePermissions < ActiveRecord::Migration
       t.string :name
 
       t.timestamps
-    end
+    end unless table_exists?(:permissions)
     
     create_table :permissions_roles do |t|
       t.integer :permission_id
       t.integer :role_id
-    end
+    end unless table_exists?(:permissions_roles)
     
   end
 end
