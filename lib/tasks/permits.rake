@@ -4,7 +4,9 @@ if defined? WulinMaster
     desc "Load all screens and actions to permits table"
     task :load_permission => :environment do
       # Import all screens
-      Dir.glob(File.join(Rails.root, "app", "screens", "**", "*.rb")).map &method(:require)
+      if File.exists?(File.join(Rails.root, "app", "screens", "**", "*.rb"))
+        Dir.glob(File.join(Rails.root, "app", "screens", "**", "*.rb")).map &method(:require)
+      end
       Dir.glob(File.join(Rails.root, "vendor", "gems", "*", "app", "screens", "**", "*.rb")).map &method(:require)
       WulinMaster::Screen.screens.each do |screen|
         screen_name = screen.name.sub(/Screen$/, "").underscore
