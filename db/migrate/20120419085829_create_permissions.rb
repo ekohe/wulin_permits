@@ -6,7 +6,7 @@ class CreatePermissions < ActiveRecord::Migration
       t.timestamps
     end unless table_exists?(:permissions)
     
-    create_table :permissions_roles do |t|
+    create_table :permissions_roles, :id => false do |t|
       t.integer :permission_id
       t.integer :role_id
     end unless table_exists?(:permissions_roles)
