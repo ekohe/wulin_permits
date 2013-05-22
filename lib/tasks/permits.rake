@@ -25,6 +25,7 @@ if defined? WulinMaster
           end
         end
       end
+      Permission.where(name: 'user_sessions#callback').delete_all
       puts "\nTotal of #{Permission.count} permissions created"
     end
   end
