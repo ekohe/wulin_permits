@@ -9,6 +9,7 @@ if defined? WulinMaster
       end
       Dir.glob(File.join(Rails.root, "vendor", "gems", "*", "app", "screens", "**", "*.rb")).map &method(:require)
       WulinMaster::Screen.screens.each do |screen|
+        screen_name = screen.name.sub(/Screen$/, "").underscore
         Permission.find_or_create_by_name("#{screen.name}#cud")
         Permission.find_or_create_by_name("#{screen.name}#read")
         print "."
