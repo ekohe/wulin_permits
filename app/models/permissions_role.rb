@@ -3,6 +3,8 @@ class PermissionsRole < ActiveRecord::Base
   belongs_to :permission
   attr_accessible :name, :description, :role_id, :permission_id
 
+  validates :permission_id, uniqueness: {scope: :role_id}
+
   def description
     self.permission.description
   end
