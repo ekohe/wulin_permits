@@ -3,27 +3,30 @@ module WulinPermits
     module Screen
       extend ActiveSupport::Concern
       
-      included do |base|
+      included do
         class_eval do
+
           def authorized?(user)
             @authorized ||= {}
-            @authorized[user] ||= begin
-              permission = Permission.find_or_create_by_name("#{name}#read")
-              return true if user.respond_to?(:admin?) && user.admin?
-              user.has_permission?(permission)
-            end
+            @authorized[user] ||= authorized_for_user_and_permission?(user, "#{name}#read")
           end
 
           def authorize_create?(user)
             @authorize_create ||= {}
-            @authorize_create[user] ||= begin
-              permission = Permission.find_or_create_by_name("#{name}#cud")
-              return true if user.respond_to?(:admin?) && user.admin?
-              user.has_permission?(permission)
-            end
+            @authorize_create[user.email] ||= authorized_for_user_and_permission?(user, "#{name}#cud")
           end
+
           alias_method :authorize_update?, :authorize_create?
           alias_method :authorize_destroy?, :authorize_create?
+
+          private
+            def authorized_for_user_and_permission?(user, permission)
+              if user.respond_to?(:admin?) && user.admin?
+                true
+              else
+                user.has_permission?(Permission.find_or_create_by_name(permission))
+              end
+            end
         end
 
       end
