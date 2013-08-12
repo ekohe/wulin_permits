@@ -6,6 +6,7 @@ module WulinPermits
       included do
         def authorized?(user=nil)
           user ||= current_user
+          return false if user.blank?
           @authorized ||= {}
           return @authorized[user.email] if @authorized.key?(user.email)
           @authorized[user.email] = authorized_for_user_and_permission?(user, "#{name}#read")
@@ -13,6 +14,7 @@ module WulinPermits
 
         def authorize_create?(user=nil)
           user ||= current_user
+          return false if user.blank?
           @authorize_create ||= {}
           return @authorize_create[user.email] if @authorize_create.key?(user.email)
           @authorize_create[user.email] = authorized_for_user_and_permission?(user, "#{name}#cud")
