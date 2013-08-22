@@ -4,12 +4,12 @@ class UsersController < WulinMaster::ScreenController
   
   add_callback :query_ready, :set_request_uri
   add_callback :objects_ready, :filter_for_role
-  
+
   protected
-  
+
   # The request URI is passed to query the account management application
   def set_request_uri
-    @query = @query.set_request_uri(request.fullpath)
+    @query = @query.set_request_uri(request.fullpath.sub(/screen=[A-Za-z]*/,'screen=UsersScreen'))
   end
   
   def filter_for_role
