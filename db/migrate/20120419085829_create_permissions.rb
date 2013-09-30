@@ -7,10 +7,13 @@ class CreatePermissions < ActiveRecord::Migration
       t.timestamps
     end unless table_exists?(:permissions)
     
-    create_table :permissions_roles, :id => false do |t|
-      t.integer :permission_id
-      t.integer :role_id
-    end unless table_exists?(:permissions_roles)
+    unless table_exists?(:permissions_roles)
+      create_table :permissions_roles do |t|
+        t.integer :permission_id
+        t.integer :role_id
+      end 
+      add_index(:permissions_roles, [:permission_id, :role_id], :unique => true)
+    end
     
   end
 
@@ -19,3 +22,6 @@ class CreatePermissions < ActiveRecord::Migration
     drop_table(:permissions_roles) if table_exists?(:permissions_roles)
   end
 end
+
+
+
