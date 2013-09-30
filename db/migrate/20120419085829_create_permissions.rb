@@ -2,7 +2,8 @@ class CreatePermissions < ActiveRecord::Migration
   def up
     create_table :permissions do |t|
       t.string :name
-
+      t.string :description
+      
       t.timestamps
     end unless table_exists?(:permissions)
     
