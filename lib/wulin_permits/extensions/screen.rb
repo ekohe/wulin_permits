@@ -28,7 +28,7 @@ module WulinPermits
             if user.respond_to?(:admin?) && user.admin?
               true
             else
-              user.has_permission?(Permission.find_or_create_by_name(permission))
+              user.has_permission?(Permission.find_or_create_by(name: permission))
             end
           end
 
@@ -36,4 +36,3 @@ module WulinPermits
     end
   end
 end
-

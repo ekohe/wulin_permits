@@ -13,14 +13,14 @@ module WulinPermits
           end
         end
       end
-      
+
       def has_permission_with_name?(permission_name)
         @has_permission_with_name ||= {}
         @has_permission_with_name[permission_name] ||= begin
           if self.respond_to?(:admin?) && self.admin?
             true
           else
-            has_permission?(Permission.find_or_create_by_name(permission_name))
+            has_permission?(Permission.find_or_create_by(name: permission_name))
           end
         end
       end

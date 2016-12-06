@@ -17,7 +17,7 @@ module WulinPermits
           permission_verify
         end
       end
-      
+
       def permission_verify
         permission = if cud?
           create_permission("#{screen.name}#cud")
@@ -28,7 +28,7 @@ module WulinPermits
         end
         return unauthorized unless current_user.has_permission?(permission) #permission.roles_users.where(user_id: current_user.id).count.zero?
       end
-      
+
 
       private
 
@@ -42,7 +42,7 @@ module WulinPermits
       end
 
       def create_permission(name)
-        Permission.find_or_create_by_name(name)
+        Permission.find_or_create_by(name: name)
       end
 
       def cud?
