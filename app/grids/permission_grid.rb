@@ -2,7 +2,9 @@ class PermissionGrid < WulinMaster::Grid
   title 'Permissions'
 
   model Permission
-  
+
+  path '/permissions'
+
   action :filter
   action :delete, only: [:PermissionScreen]
 
