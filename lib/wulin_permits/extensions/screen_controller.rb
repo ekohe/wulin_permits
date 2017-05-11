@@ -4,7 +4,7 @@ module WulinPermits
       extend ActiveSupport::Concern
 
       included do |base|
-        before_filter :create_permissions
+        before_action :create_permissions
       end
 
       def create_permissions
