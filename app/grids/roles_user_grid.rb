@@ -7,15 +7,13 @@ class RolesUserGrid < WulinMaster::Grid
   column :user, source: 'email', only: [:MasterRoleDetailUserScreen]
 
   # actions for master sad detail role grid
-  action :add_detail, model: 'role', screen: 'AddRoleForUserScreen', title: 'Add Roles', icon: 'link', only: [:MasterUserDetailRoleScreen]
-  action :delete, title: 'Remove Roles', icon: 'unlink', only: [:MasterUserDetailRoleScreen]
+  action :add_detail, model: 'role', screen: 'AddRoleForUserScreen', title: 'Add Roles', only: [:MasterUserDetailRoleScreen]
 
   # actions for master service detail sad grid
-  action :add_detail, model: 'user', screen: 'AddUserForRoleScreen', title: 'Add Users', icon: 'link', only: [:MasterRoleDetailUserScreen]
-  action :delete, title: 'Remove Users', icon: 'unlink', only: [:MasterRoleDetailUserScreen]
+  action :add_detail, model: 'user', screen: 'AddUserForRoleScreen', title: 'Add Users', only: [:MasterRoleDetailUserScreen]
 
   # Common actions
-  # action :filter
-  action :excel
+  action :export
+  action :delete
   action :audit
 end

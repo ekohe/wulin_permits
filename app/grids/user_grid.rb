@@ -11,6 +11,5 @@ class UserGrid < WulinMaster::Grid
 
   column :email, :width => 500
 
-  action :filter
-  action :excel
+  action :export
 end

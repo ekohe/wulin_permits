@@ -5,7 +5,6 @@ class PermissionGrid < WulinMaster::Grid
 
   path '/permissions'
 
-  action :filter
   action :delete, only: [:PermissionScreen]
 
   column :name, label: 'Permission', editable: false
