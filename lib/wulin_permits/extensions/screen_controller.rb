@@ -3,7 +3,7 @@ module WulinPermits
     module ScreenController
       extend ActiveSupport::Concern
 
-      included do |base|
+      included do
         before_action :create_permissions
       end
 
@@ -26,14 +26,13 @@ module WulinPermits
         else
           create_permission("#{controller_name}##{action_name}")
         end
-        return unauthorized unless current_user.has_permission?(permission) #permission.roles_users.where(user_id: current_user.id).count.zero?
+        return unauthorized unless current_user.has_permission?(permission)
       end
-
 
       private
 
       def setup_permission
-        if cud? or read?
+        if cud? || read?
           create_permission("#{screen.name}#cud")
           create_permission("#{screen.name}#read")
         else
@@ -46,13 +45,12 @@ module WulinPermits
       end
 
       def cud?
-        %w(new show edit update create destroy wulin_master_new_form wulin_master_edit_form wulin_master_option_new_form).include? action_name
+        %w[new show edit update create destroy wulin_master_new_form wulin_master_edit_form wulin_master_option_new_form].include? action_name
       end
 
       def read?
         action_name == 'index'
       end
-
     end
   end
 end
