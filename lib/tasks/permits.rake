@@ -19,7 +19,7 @@ if defined? WulinMaster
       Rails.application.routes.routes.routes.map(&:defaults).each do |option|
         if option[:controller].present? and option[:action].present?
           controller_name = option[:controller].include?("/") ? option[:controller].split("/").last : option[:controller]
-          if %w(index new show edit update create destroy wulin_master_new_form wulin_master_option_new_form wulin_master_edit_form).exclude? option[:action]
+          if %w(index new show edit update create destroy wulin_master_new_form wulin_master_edit_form).exclude? option[:action]
             name = "#{controller_name}##{option[:action]}"
             Permission.find_or_create_by(name: name)
             print '.'

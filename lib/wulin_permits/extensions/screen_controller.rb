@@ -45,7 +45,7 @@ module WulinPermits
       end
 
       def cud?
-        %w[new show edit update create destroy wulin_master_new_form wulin_master_edit_form wulin_master_option_new_form].include? action_name
+        %w[new show edit update create destroy wulin_master_new_form wulin_master_edit_form].include? action_name
       end
 
       def read?
