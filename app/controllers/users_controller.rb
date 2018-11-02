@@ -8,8 +8,8 @@ class UsersController < WulinMaster::ScreenController
   protected
 
   # The request URI is passed to query the account management application
-  def set_request_uri
-    @query = @query.set_request_uri(request.fullpath.sub(/screen=[A-Za-z]*/,'screen=UsersScreen'))
+  def set_request_uri    
+    @query = @query.set_request_uri(request.fullpath.sub(/screen=[A-Za-z]*/,'screen=UsersScreen')) if @query.respond_to?(:set_request_uri)
   end
 
   def filter_for_role
