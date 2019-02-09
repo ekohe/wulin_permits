@@ -1,5 +1,5 @@
 class PermissionGrid < WulinMaster::Grid
-  title 'Permissions'
+  title 'パーミッション'
 
   model Permission
 
