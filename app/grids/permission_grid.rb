@@ -7,6 +7,6 @@ class PermissionGrid < WulinMaster::Grid
 
   action :delete, only: [:PermissionScreen]
 
-  column :name, label: 'Permission', editable: false
-  column :description, width: 300
+  column :name, label: 'パーミッション', editable: false
+  column :description, width: 300, label: '内容'
 end

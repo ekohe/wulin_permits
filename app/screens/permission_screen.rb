@@ -1,5 +1,5 @@
 class PermissionScreen < WulinMaster::Screen
-  title "Permissions"
+  title 'パーミッション'
 
   path '/permissions'
 

@@ -3,6 +3,6 @@ class PermissionsRoleGrid < WulinMaster::Grid
 
   model PermissionsRole
 
-  column :permission, editable: false
-  column :description, sql_expression: 'permissions.description'
+  column :permission, editable: false, label: 'パーミッション'
+  column :description, sql_expression: 'permissions.description', label: '内容'
 end

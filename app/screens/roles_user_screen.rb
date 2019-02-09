@@ -1,5 +1,5 @@
 class RolesUserScreen < WulinMaster::Screen
-  title 'User roles'
+  title 'ユーザーロール'
 
   path '/roles_users'
 

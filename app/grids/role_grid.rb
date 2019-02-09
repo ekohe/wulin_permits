@@ -1,9 +1,9 @@
 class RoleGrid < WulinMaster::Grid
-  title 'Roles'
+  title '役割'
 
   model Role
 
-  column :name
+  column :name, label: '名前'
 
   load_default_actions({only: [:MasterRoleDetailUserScreen]})
 
