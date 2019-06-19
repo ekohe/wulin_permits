@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoleScreen < WulinMaster::Screen
   title 'Roles Permissions'
 
@@ -10,6 +12,6 @@ class RoleScreen < WulinMaster::Screen
   grid PermissionGrid, height: '50%', width: '45%', title: 'Available permissions', exclude_of: "RoleGrid", eager_loading: false
 
   def authorized?(user)
-    user.admin?
+    user&.admin?
   end
 end
