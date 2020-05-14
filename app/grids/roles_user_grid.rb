@@ -16,6 +16,4 @@ class RolesUserGrid < WulinMaster::Grid
   action :export
   action :delete
   action :audit
-  action :switch, title: 'All Roles', switch_to: { path: '/roles', screen: 'MasterRoleDetailUserScreen' }, only: [:MasterUserDetailRoleScreen]
-  action :switch, title: 'All Users', switch_to: { path: '/roles_users', screen: 'MasterUserDetailRoleScreen' }, only: [:MasterRoleDetailUserScreen]
 end
