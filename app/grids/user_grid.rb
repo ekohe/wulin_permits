@@ -11,6 +11,7 @@ class UserGrid < WulinMaster::Grid
 
   column :email, :width => 500
 
+  action :add_user, screen: 'AddUserScreen', model: 'user'
   action :export
   action :copy_grid_states, icon: :content_copy
 end
