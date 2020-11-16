@@ -41,11 +41,11 @@ WulinMaster.actions.AddUser = $.extend({}, WulinMaster.actions.BaseAction, {
   // Invite
   inviteUserIntoApp: function (dialogDom) {
     var self = this;
-    var detailGridName = dialogDom.find(".grid_container").attr("name");
-    var detailGrid = gridManager.getGrid(detailGridName);
-    var detailIds = detailGrid.getSelectedIds();
+    var invitedUserGridName = dialogDom.find(".grid_container").attr("name");
+    var invitedUserGrid = gridManager.getGrid(invitedUserGridName);
+    var invitedUserIds = invitedUserGrid.getSelectedIds();
     var data = {
-      user_ids: detailIds,
+      user_ids: invitedUserIds,
     };
     $.post("/users/invite", data, function (response) {
       displayNewNotification(response.message);
