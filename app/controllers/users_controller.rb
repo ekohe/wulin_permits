@@ -3,13 +3,19 @@ class UsersController < WulinMaster::ScreenController
   controller_for_screen UserScreen
 
   add_callback :query_ready, :set_request_uri
+  add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
 
   protected
 
   # The request URI is passed to query the account management application
-  def set_request_uri    
+  def set_request_uri
     @query = @query.set_request_uri(request.fullpath.sub(/screen=[A-Za-z]*/,'screen=UsersScreen')) if @query.respond_to?(:set_request_uri)
+  end
+
+  # load all users including uninvited uses
+  def load_uninvited_users
+    @query = @query.uninvited_users if params[:uninvited_users_only] == 'true'
   end
 
   def filter_for_role
