@@ -34,10 +34,6 @@ WulinMaster.actions.AddUser = $.extend({}, WulinMaster.actions.BaseAction, {
     }).success(function (response) {
       modalContentDom.html(response);
 
-      // copy the target's master to detail grid, just replace the operator to 'exclude'
-      var gridName = modalContentDom.find(".grid_container").attr("name");
-      var grid = gridManager.getGrid(gridName);
-
       self.setGridHeightInModal(modalContentDom.parent());
     });
   },
