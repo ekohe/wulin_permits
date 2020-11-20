@@ -1,5 +1,5 @@
 class AddUserScreen < WulinMaster::Screen
-  title "Mima Users"
+  title "Invite User"
 
-  grid InvitedUserGrid, title: 'Mima Users', master_model: 'users'
+  grid InvitedUserGrid, title: 'Invite User', master_model: 'users'
 end
