@@ -7,8 +7,8 @@ class UsersController < WulinMaster::ScreenController
   add_callback :objects_ready, :filter_for_role
 
   def invite
-    User.invite(params[:user_ids])
-    render json: { message: 'Invited successfully' }
+    invite_result = User.invite(params[:user_ids])
+    render json: { message: invite_result["message"] }
   end
 
   protected
