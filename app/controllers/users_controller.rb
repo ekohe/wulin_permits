@@ -21,7 +21,7 @@ class UsersController < WulinMaster::ScreenController
   # load all users including uninvited uses
   def load_uninvited_users
     if params[:uninvited_users_only] == 'true'
-      @query = @query.uninvited_users
+      @query = @query.to_a(invited: false)
       params[:count] = 20000
     end
   end
