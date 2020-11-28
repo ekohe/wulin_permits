@@ -4,7 +4,7 @@ class UserScreen < WulinMaster::Screen
   path '/users'
 
   grid UserGrid
-  
+
   def authorized?(user)
     user.admin?
   end
