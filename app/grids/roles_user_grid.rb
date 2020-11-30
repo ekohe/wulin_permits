@@ -3,6 +3,8 @@ class RolesUserGrid < WulinMaster::Grid
 
   model RolesUser
 
+  path "/roles_users"
+
   column :role, only: [:MasterUserDetailRoleScreen]
   column :user, source: 'email', only: [:MasterRoleDetailUserScreen]
 
