@@ -3,8 +3,11 @@
 class RolesController < WulinMaster::ScreenController
   controller_for_screen RoleScreen
 
-  add_callback :query_ready, :filter_for_user
+  #
+  # DON'T change this order!
+  #
   add_callback :query_ready, :filter_role
+  add_callback :query_ready, :filter_for_user
 
   private
 
@@ -12,7 +15,16 @@ class RolesController < WulinMaster::ScreenController
     filter = params[:filters].to_a.find { |x| x.value?("name") }
     return if filter.blank? || filter[:value].blank?
 
-    @query ||= grid.model
+    #
+    # Override the
+    #
+    # - query.where(["UPPER(cast((#{column_name}) as text)) LIKE UPPER(?)", value + "%"])
+    # - query.where(["UPPER(cast(#{relation_table_name}.#{source} as text)) #{operator} UPPER(?)", value + "%"])
+    #
+    where_clauses = @query.where_clause.send :predicates
+    if where_clauses.size == 1 && where_clauses.first =~ /name/i
+      @query = @query.unscope(:where)
+    end
 
     case filter[:operator]
     when "equals"
@@ -28,7 +40,6 @@ class RolesController < WulinMaster::ScreenController
 
     role_ids = RolesUser.where(user_id: filter[:value]).pluck(:role_id).uniq
 
-    @query = grid.model
-    @query = grid.model.where("id NOT IN (?)", role_ids) if role_ids.present?
+    @query = @query.where("id NOT IN (?)", role_ids) if role_ids.present?
   end
 end
