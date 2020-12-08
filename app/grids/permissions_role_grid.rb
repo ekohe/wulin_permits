@@ -1,10 +1,10 @@
 class PermissionsRoleGrid < WulinMaster::Grid
-  title 'Permissions Roles'
+  title "Permissions Roles"
 
   model PermissionsRole
 
-  path '/permissions_roles'
+  path "/permissions_roles"
 
   column :permission, editable: false
-  column :description, sql_expression: 'permissions.description'
+  column :description, sql_expression: "permissions.description"
 end
