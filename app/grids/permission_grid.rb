@@ -1,12 +1,19 @@
 class PermissionGrid < WulinMaster::Grid
-  title 'Permissions'
+  title "Permissions"
 
   model Permission
 
-  path '/permissions'
+  path "/permissions"
 
   action :delete, only: [:PermissionScreen]
 
-  column :name, label: 'Permission', editable: false
-  column :description, width: 300
+  column :permission_grid_name,
+    label: "Permission",
+    sql_expression: "permissions.name",
+    editable: false
+
+  column :permission_grid_description,
+    label: "Description",
+    sql_expression: "permissions.description",
+    width: 300
 end
