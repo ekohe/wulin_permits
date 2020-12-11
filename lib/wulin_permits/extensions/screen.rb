@@ -7,17 +7,25 @@ module WulinPermits
         def authorized?(user=nil)
           user ||= current_user
           return false if user.blank?
+
           @authorized ||= {}
           return @authorized[user.email] if @authorized.key?(user.email)
-          @authorized[user.email] = authorized_for_user_and_permission?(user, "#{name}#read")
+
+          @authorized[user.email] = authorized_for_user_and_permission?(user, permission_name('read'))
         end
 
         def authorize_create?(user=nil)
           user ||= current_user
           return false if user.blank?
+
           @authorize_create ||= {}
           return @authorize_create[user.email] if @authorize_create.key?(user.email)
-          @authorize_create[user.email] = authorized_for_user_and_permission?(user, "#{name}#cud")
+
+          @authorize_create[user.email] = authorized_for_user_and_permission?(user, permission_name("cud"))
+        end
+
+        def permission_name(action)
+          "#{name}##{action}"
         end
 
         alias_method :authorize_update?, :authorize_create?
