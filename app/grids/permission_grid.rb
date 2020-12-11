@@ -9,11 +9,11 @@ class PermissionGrid < WulinMaster::Grid
 
   column :permission_grid_name,
     label: "Permission",
-    sql_expression: "permissions.name",
+    sql_expression: "#{Permission.table_name}.name",
     editable: false
 
   column :permission_grid_description,
     label: "Description",
-    sql_expression: "permissions.description",
+    sql_expression: "#{Permission.table_name}.description",
     width: 300
 end
