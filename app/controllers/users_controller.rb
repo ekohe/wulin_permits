@@ -6,11 +6,6 @@ class UsersController < WulinMaster::ScreenController
   add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
 
-  def invite
-    invite_result = User.invite(params[:user_ids])
-    render json: { message: invite_result["message"] }
-  end
-
   protected
 
   # The request URI is passed to query the account management application
