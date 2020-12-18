@@ -26,7 +26,7 @@ module WulinPermits
         else
           create_permission("#{controller_name}##{action_name}")
         end
-        return unauthorized unless current_user.has_permission?(permission)
+        return unauthorized(permission.name) unless current_user.has_permission?(permission)
       end
 
       private
