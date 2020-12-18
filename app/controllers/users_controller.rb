@@ -6,27 +6,6 @@ class UsersController < WulinMaster::ScreenController
   add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
 
-  def invite
-    invite_result = User.invite(params[:user_ids])
-    render json: { message: invite_result["message"] }
-  end
-
-  def destroy
-    remove_result = if params[:id] == current_user.id.to_s
-      JSON.parse({ success: false, message: 'You can not delete yourself from the APP' }.to_json)
-    else
-      grid.model.remove(params[:id])
-    end
-
-    if remove_result['success']
-      render json: {success: true }
-    else
-      render json: {success: false, error_message: remove_result['message']}
-    end
-  rescue StandardError
-    render json: {success: false, error_message: $ERROR_INFO.message}
-  end
-
   protected
 
   # The request URI is passed to query the account management application

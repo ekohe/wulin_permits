@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  resources :users do
-    collection do
-      post :invite
-    end
-  end
+  resources :users
 
   resources :roles_users
 
