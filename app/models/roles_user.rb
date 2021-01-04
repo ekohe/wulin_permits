@@ -2,10 +2,10 @@ class RolesUser < ::ActiveRecord::Base
   belongs_to :role, optional: true
   belongs_to :user, optional: true
 
-  validates :user_id, presence: true
-  validates :role_id, presence: true
+  validates :user_id, :role_id, presence: true
+  validates_uniqueness_of :user_id, scope: %i[role_id]
 
-  delegate :name, to: :roler, prefix: true, allow_nil: true
+  delegate :name, to: :role, allow_nil: true
 
   def self.user_has_role?(user, role)
     return false if user.blank? || role.blank?
