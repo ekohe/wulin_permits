@@ -9,7 +9,7 @@ class UserGrid < WulinMaster::Grid
 
   cell_editable false
 
-  column :email, :width => 500
+  column :email, width: 250
 
   action :export
   action :copy_grid_states, icon: :content_copy, title: 'Copy Grid States', only: [:GridStatesScreen]
