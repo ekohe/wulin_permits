@@ -15,7 +15,7 @@ class RolesUserGrid < WulinMaster::Grid
   action :add_detail, model: 'user', screen: 'AddUserForRoleScreen', title: 'Attach Users', only: [:MasterRoleDetailUserScreen]
 
   # Common actions
-  action :export
   action :delete
+  action :export
   action :audit
 end
