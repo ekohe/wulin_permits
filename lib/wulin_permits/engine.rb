@@ -5,7 +5,7 @@ require 'wulin_permits/extensions/screen'
 
 module WulinPermits
   class Engine < Rails::Engine
-    initializer "Load extensions and definitions" do |app|
+    config.to_prepare do
       if Object.const_defined?('User')
         User.send :include, WulinPermits::Extensions::User
       elsif Object.const_defined?('WulinAuth')
@@ -16,7 +16,9 @@ module WulinPermits
 
       WulinMaster::ScreenController.send :include, WulinPermits::Extensions::ScreenController
       WulinMaster::Screen.send :include, WulinPermits::Extensions::Screen
+    end
 
+    initializer "append_assets" do |app|
       app.config.assets.precompile += %w(role_screen.css wulin_permits.js)
     end
 
