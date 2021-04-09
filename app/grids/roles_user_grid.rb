@@ -5,7 +5,7 @@ class RolesUserGrid < WulinMaster::Grid
 
   path "/roles_users"
 
-  column :role, only: [:MasterUserDetailRoleScreen]
+  column :role, editable: false, only: [:MasterUserDetailRoleScreen]
   column :user, source: 'email', only: [:MasterRoleDetailUserScreen]
 
   # actions for master sad detail role grid
