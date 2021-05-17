@@ -17,22 +17,16 @@ module WulinPermits
       def create_permissions
         return unless respond_to?(:current_user)
 
-        # return true if we don't have the
-        return if current_user.admin?
-
-        permission_verify
+        # admin should has the auto-created permission innately.
+        current_user.admin? ? setup_permission_for_admin : permission_verify
       end
 
       #
       # we need to check the if we have the current_user
       #
       def permission_verify
-        if current_user.has_permission? wulin_permits_required_permission
-          # do nothing
-        else
-          # call the unauthorized, the unauthorized method belongs to lib/wulin_master/authorization.rb
-          unauthorized
-        end
+        # call the unauthorized, the unauthorized method belongs to lib/wulin_master/authorization.rb
+        unauthorized unless current_user.has_permission? wulin_permits_required_permission
       end
 
       #
@@ -56,8 +50,6 @@ module WulinPermits
       private
 
       def setup_missing_permission
-        screen_name = screen.name.sub(/Screen$/, "").underscore
-
         if cud?
           create_permission [screen_name, :cud].join("#")
         elsif read?
@@ -67,8 +59,21 @@ module WulinPermits
         end
       end
 
+      def setup_permission_for_admin
+        if cud? || read?
+          create_permission [screen_name, :cud].join("#")
+          create_permission [screen_name, :read].join("#")
+        else
+          create_permission [controller_name, action_name].join("#")
+        end
+      end
+
       def create_permission(name)
         Permission.where(name: name).first_or_create
+      end
+
+      def screen_name
+        @screen_name ||= screen.name.sub(/Screen$/, "").underscore
       end
     end
   end
