@@ -15,7 +15,7 @@ class RolesUserGrid < WulinMaster::Grid
   action :add_detail, icon: :add_circle_outline, model: 'user', screen: 'AddUserForRoleScreen', title: 'Attach Users', only: [:MasterRoleDetailUserScreen]
 
   # Common actions
-  action :delete
+  action :delete, icon: :remove_circle_outline
   action :export
   action :audit
 end
