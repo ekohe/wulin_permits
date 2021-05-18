@@ -11,9 +11,9 @@ class PermissionsRoleGrid < WulinMaster::Grid
   column :name, through: :role, only: [:MasterPermissionRoleScreen]
 
   # actions for MasterRolePermissionScreen
-  action :add_detail, model: 'permission', screen: 'AddPermissionToRoleScreen', title: 'Attach Permissions', only: [:MasterRolePermissionScreen]
-  action :delete, title: 'Remove Permissions', only: [:MasterRolePermissionScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'permission', screen: 'AddPermissionToRoleScreen', title: 'Attach Permissions', only: [:MasterRolePermissionScreen]
+  action :delete, icon: :remove_circle_outline, title: 'Remove Permissions', only: [:MasterRolePermissionScreen]
   # actions for MasterPermissionRoleScreen
-  action :add_detail, model: 'role', screen: 'AddRoleToPermissionScreen', title: 'Roles', only: [:MasterPermissionRoleScreen]
-  action :delete, title: 'Remove Roles', only: [:MasterPermissionRoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'role', screen: 'AddRoleToPermissionScreen', title: 'Roles', only: [:MasterPermissionRoleScreen]
+  action :delete, icon: :remove_circle_outline, title: 'Remove Roles', only: [:MasterPermissionRoleScreen]
 end
