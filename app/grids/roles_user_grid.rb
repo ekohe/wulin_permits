@@ -9,13 +9,13 @@ class RolesUserGrid < WulinMaster::Grid
   column :user, source: 'email', only: [:MasterRoleDetailUserScreen]
 
   # actions for master sad detail role grid
-  action :add_detail, model: 'role', screen: 'AddRoleForUserScreen', title: 'Attach Roles', only: [:MasterUserDetailRoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'role', screen: 'AddRoleForUserScreen', title: 'Attach Roles', only: [:MasterUserDetailRoleScreen]
 
   # actions for master service detail sad grid
-  action :add_detail, model: 'user', screen: 'AddUserForRoleScreen', title: 'Attach Users', only: [:MasterRoleDetailUserScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'user', screen: 'AddUserForRoleScreen', title: 'Attach Users', only: [:MasterRoleDetailUserScreen]
 
   # Common actions
-  action :delete
+  action :delete, icon: :remove_circle_outline
   action :export
   action :audit
 end
