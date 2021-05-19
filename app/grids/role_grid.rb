@@ -9,6 +9,6 @@ class RoleGrid < WulinMaster::Grid
 
   load_default_actions({only: [:MasterRoleDetailUserScreen]})
 
-  action :create, only: [:RoleScreen]
-  action :delete, only: [:RoleScreen]
+  action :create, only: [:RoleScreen, :MasterRolePermissionScreen]
+  action :delete, only: [:RoleScreen, :MasterRolePermissionScreen]
 end
