@@ -6,6 +6,7 @@ class PermissionGrid < WulinMaster::Grid
   path "/permissions"
 
   action :delete, only: [:PermissionScreen]
+  action(:audit) if defined? WulinAudit
 
   column :permission_grid_name,
     label: "Permission",

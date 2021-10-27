@@ -19,4 +19,6 @@ class RolesUserGrid < WulinMaster::Grid
   # Common actions
   action :export
   action :audit
+
+  action(:audit) if defined? WulinAudit
 end

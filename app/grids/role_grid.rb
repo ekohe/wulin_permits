@@ -11,4 +11,6 @@ class RoleGrid < WulinMaster::Grid
 
   action :create, only: [:RoleScreen]
   action :delete, only: [:RoleScreen]
+
+  action(:audit) if defined? WulinAudit
 end
