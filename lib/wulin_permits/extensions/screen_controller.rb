@@ -3,8 +3,8 @@ module WulinPermits
     module ScreenController
       extend ActiveSupport::Concern
 
-      CUD_ACTIONS  = %w[new show edit update create destroy wulin_master_new_form wulin_master_edit_form].freeze
-      READ_ACTIONS = %w[index].freeze
+      CUD_ACTIONS  = %w[new edit update create destroy wulin_master_new_form wulin_master_edit_form].freeze
+      READ_ACTIONS = %w[index show].freeze
 
       included do
         # If the callback renders or redirects, the action will not run. If there are additional callbacks scheduled to run after that callback, they are also cancelled.
