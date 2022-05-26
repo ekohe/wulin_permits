@@ -1,20 +1,20 @@
 class RolesUserGrid < WulinMaster::Grid
-  title 'User roles'
+  title "User roles"
 
   model RolesUser
 
   path "/roles_users"
 
   column :role, editable: false, only: [:MasterUserDetailRoleScreen]
-  column :user, source: 'email', only: [:MasterRoleDetailUserScreen]
+  column :email, label: "User", editable: false, only: [:MasterRoleDetailUserScreen]
 
   # actions for master sad detail role grid
-  action :add_detail, icon: :add_circle_outline, model: 'role', screen: 'AddRoleForUserScreen', title: 'Attach Roles', only: [:MasterUserDetailRoleScreen]
-  action :delete, icon: :remove_circle_outline, title: 'Remove Roles', only: [:MasterUserDetailRoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: "role", screen: "AddRoleForUserScreen", title: "Attach Roles", only: [:MasterUserDetailRoleScreen]
+  action :delete, icon: :remove_circle_outline, title: "Remove Roles", only: [:MasterUserDetailRoleScreen]
 
   # actions for master service detail sad grid
-  action :add_detail, icon: :add_circle_outline, model: 'user', screen: 'AddUserForRoleScreen', title: 'Attach Users', only: [:MasterRoleDetailUserScreen]
-  action :delete, icon: :remove_circle_outline, title: 'Remove Users', only: [:MasterRoleDetailUserScreen]
+  action :add_detail, icon: :add_circle_outline, model: "user", screen: "AddUserForRoleScreen", title: "Attach Users", only: [:MasterRoleDetailUserScreen]
+  action :delete, icon: :remove_circle_outline, title: "Remove Users", only: [:MasterRoleDetailUserScreen]
 
   # Common actions
   action :export

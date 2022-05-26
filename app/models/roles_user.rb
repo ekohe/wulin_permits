@@ -6,6 +6,7 @@ class RolesUser < ::ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: %i[role_id]
 
   delegate :name, to: :role, allow_nil: true
+  attr_accessor :email
 
   def self.user_has_role?(user, role)
     return false if user.blank? || role.blank?
