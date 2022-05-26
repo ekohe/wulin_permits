@@ -6,7 +6,7 @@ class RolesUserGrid < WulinMaster::Grid
   path "/roles_users"
 
   column :role, editable: false, only: [:MasterUserDetailRoleScreen]
-  column :email, label: "User", editable: false, only: [:MasterRoleDetailUserScreen]
+  column :email, label: "User", editable: false, only: [:MasterRoleDetailUserScreen], formatter: "NullOverrideFormatter", value_to_replace_null: "Unknown User"
 
   # actions for master sad detail role grid
   action :add_detail, icon: :add_circle_outline, model: "role", screen: "AddRoleForUserScreen", title: "Attach Roles", only: [:MasterUserDetailRoleScreen]
