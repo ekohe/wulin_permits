@@ -5,11 +5,22 @@ class RolesUsersController < WulinMaster::ScreenController
 
   add_callback :query_ready, :set_user_id_condition
   add_callback :query_ready, :set_role_id_condition
+  add_callback :query_ready, :preload_relations
   add_callback :objects_ready, :assign_email
 
   protected
 
+  def preload_relations
+    @query = @query.includes(:role)
+  end
+
   def assign_email
+    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
+      # do nothing
+    else
+      return
+    end
+
     users = User.find_by_ids @objects.map(&:user_id).compact
 
     email_dict = users.each_with_object({}) do |user, target|

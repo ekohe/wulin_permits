@@ -5,7 +5,7 @@ class RolesUserGrid < WulinMaster::Grid
 
   path "/roles_users"
 
-  column :role, editable: false, only: [:MasterUserDetailRoleScreen]
+  column :name, through: :role, label: "Role", editable: false, only: [:MasterUserDetailRoleScreen]
   column :email, label: "User", editable: false, only: [:MasterRoleDetailUserScreen], formatter: "NullOverrideFormatter", value_to_replace_null: "Unknown User"
 
   # actions for master sad detail role grid
