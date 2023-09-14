@@ -6,6 +6,7 @@ class RoleGrid < WulinMaster::Grid
   path '/roles'
 
   column :name
+  column :description
 
   load_default_actions({only: [:MasterRoleDetailUserScreen]})
 
