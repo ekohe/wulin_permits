@@ -16,7 +16,7 @@ class RolesUsersController < WulinMaster::ScreenController
 
   def assign_email
     if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
-      # do nothing
+      # assign email
     else
       return
     end
@@ -31,8 +31,17 @@ class RolesUsersController < WulinMaster::ScreenController
       user_role.email = email_dict[user_role.user_id]
     end
 
+    # if email is empty, then we need to remove it
+    @objects.select! do |user_role|
+      user_role.email.present?
+    end
+
+    @count_without_filter = @objects.count
+
     set_email_condition
     set_email_sorting
+
+    @count = @objects.size
   end
 
   def set_email_sorting
