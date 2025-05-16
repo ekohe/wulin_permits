@@ -1,5 +1,5 @@
 class UserGrid < WulinMaster::Grid
-  title 'Users'
+  title 'ユーザー'
 
   model User
 

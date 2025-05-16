@@ -1,5 +1,5 @@
 class AddRoleForUserScreen < WulinMaster::Screen
   title "Available Roles"
 
-  grid RoleGrid, title: 'Available Roles', master_model: 'users'
+  grid RoleGrid, title: '利用可能なロール', master_model: 'users'
 end

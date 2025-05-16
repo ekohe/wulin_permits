@@ -1,5 +1,5 @@
 class RoleGrid < WulinMaster::Grid
-  title 'Roles'
+  title 'ロール'
 
   model Role
 

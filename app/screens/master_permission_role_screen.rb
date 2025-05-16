@@ -1,10 +1,10 @@
 class MasterPermissionRoleScreen < WulinMaster::Screen
-  title 'Roles Permissions'
+  title 'ロール権限'
 
   path '/permissions'
 
-  grid PermissionGrid, height: '100%', width: '50%', title: 'Permissions'
-  grid PermissionsRoleGrid, height: '100%', width: '50%', title: 'Roles', master_grid: 'PermissionGrid', eager_loading: false
+  grid PermissionGrid, height: '100%', width: '50%', title: '権限一覧'
+  grid PermissionsRoleGrid, height: '100%', width: '50%', title: 'ロール一覧', master_grid: 'PermissionGrid', eager_loading: false
 
   def authorized?(user)
     user&.admin?

@@ -1,5 +1,5 @@
 class UserScreen < WulinMaster::Screen
-  title 'Users'
+  title 'ユーザー'
 
   path '/users'
 

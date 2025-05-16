@@ -1,5 +1,5 @@
 class PermissionsRoleGrid < WulinMaster::Grid
-  title "Permissions Roles"
+  title "権限ロール"
 
   model PermissionsRole
 
@@ -11,10 +11,10 @@ class PermissionsRoleGrid < WulinMaster::Grid
   column :name, through: :role, only: [:MasterPermissionRoleScreen]
 
   # actions for RoleScreen
-  action :add_detail, icon: :add_circle_outline, model: 'permission', screen: 'AddPermissionToRoleScreen', title: 'Attach Permissions', only: [:RoleScreen]
-  action :delete, icon: :remove_circle_outline, title: 'Remove Permissions', only: [:RoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'permission', screen: 'AddPermissionToRoleScreen', title: '権限を追加', only: [:RoleScreen]
+  action :delete, icon: :remove_circle_outline, title: '権限を削除', only: [:RoleScreen]
   # actions for MasterPermissionRoleScreen
-  action :add_detail, icon: :add_circle_outline, model: 'role', screen: 'AddRoleToPermissionScreen', title: 'Attach Roles', only: [:MasterPermissionRoleScreen]
-  action :delete, icon: :remove_circle_outline, title: 'Remove Roles', only: [:MasterPermissionRoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: 'role', screen: 'AddRoleToPermissionScreen', title: 'ロールを追加', only: [:MasterPermissionRoleScreen]
+  action :delete, icon: :remove_circle_outline, title: 'ロールを削除', only: [:MasterPermissionRoleScreen]
   action(:audit) if defined? WulinAudit
 end

@@ -1,3 +1,3 @@
 class AddRoleToPermissionScreen < WulinMaster::Screen
-  grid RoleGrid, title: 'Available Roles', master_model: 'permissions'
+  grid RoleGrid, title: '利用可能なロール', master_model: 'permissions'
 end
