@@ -6,7 +6,11 @@ class UsersController < WulinMaster::ScreenController
   add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
 
-  NO_SMART_QUERY_SCREENS = %w[MasterUserDetailRoleScreen UserLocationScreen].freeze
+  NO_SMART_QUERY_SCREENS = %w[
+    MasterUserDetailRoleScreen
+    UserLocationScreen
+    UserDepartmentScreen
+  ].freeze
 
   def render_json
     return super unless NO_SMART_QUERY_SCREENS.include? params[:screen]
