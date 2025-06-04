@@ -6,6 +6,25 @@ class UsersController < WulinMaster::ScreenController
   add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
 
+  NO_SMART_QUERY_SCREENS = %w[MasterUserDetailRoleScreen UserLocationScreen].freeze
+
+  def render_json
+    return super unless NO_SMART_QUERY_SCREENS.include? params[:screen]
+
+    query_response = @query.raw_response
+    render_start_time = Time.current
+
+    @object_array = grid.arraify(@objects)
+
+    data = query_response.merge "rows" => @object_array
+    data[:aggregation] = @aggregation_result if aggregation?
+
+    duration = Time.current - render_start_time
+    Rails.logger.info "Rendered JSON in #{duration.round(3)} sec."
+
+    data
+  end
+
   protected
 
   # The request URI is passed to query the account management application
