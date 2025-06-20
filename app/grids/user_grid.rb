@@ -10,7 +10,10 @@ class UserGrid < WulinMaster::Grid
   cell_editable false
 
   column :email, width: 250
+  column :password, visible: false, formable: %i[new edit], password: true
+  column :created_at, formable: false
+  column :updated_at, formable: false, visible: false
 
-  action :export
+  load_default_actions
   action :copy_grid_states, icon: :content_copy, title: 'Copy Grid States', only: [:GridStatesScreen]
 end
