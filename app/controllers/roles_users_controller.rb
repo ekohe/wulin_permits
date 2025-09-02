@@ -3,15 +3,38 @@ class RolesUsersController < WulinMaster::ScreenController
 
   controller_for_screen MasterUserDetailRoleScreen
 
-  add_callback :query_ready, :set_user_id_condition
-  add_callback :query_ready, :set_role_id_condition
-  add_callback :query_ready, :preload_relations
-  add_callback :objects_ready, :assign_email
+  add_callback :query_filters_ready, :adapter_filters
+  add_callback :query_initialized, :set_user_id_condition
+  add_callback :query_initialized, :set_role_id_condition
+  add_callback :query_initialized, :preload_relations
 
-  protected
+  if defined? Mima
+    # Mima has User model
+  else
+    add_callback :objects_ready, :assign_email
+  end
+
+  private
+
+  def adapter_filters
+    unless defined? Mima
+      where_sql = @query.where_clause.ast.children.reject do |node|
+        node.to_sql.include?("CAST(id AS TEXT)") || node.to_sql.include?("CAST(email AS TEXT)")
+      end
+
+      @query = @query.except(:where)
+      where_sql.each do |cond|
+        @query = @query.where cond
+      end
+    end
+  end
 
   def preload_relations
-    @query = @query.includes(:role)
+    if defined? Mima
+      @query = @query.includes(:role, :user)
+    else
+      @query = @query.includes(:role)
+    end
   end
 
   def assign_email
@@ -87,7 +110,7 @@ class RolesUsersController < WulinMaster::ScreenController
     user_filter_params = params[:filters].find { |x| x.value?("user_id") }
     return if user_filter_params.blank?
 
-    @query = grid.model.where(user_id: user_filter_params[:value])
+    @query = @query.where(user_id: user_filter_params[:value])
   end
 
   def set_role_id_condition
@@ -95,6 +118,6 @@ class RolesUsersController < WulinMaster::ScreenController
 
     role_filter_params = params[:filters].find { |x| x.value?("role_id") }
     return if role_filter_params.blank?
-    @query = grid.model.where(role_id: role_filter_params[:value])
+    @query = @query.where(role_id: role_filter_params[:value])
   end
 end
