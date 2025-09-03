@@ -3,10 +3,10 @@ class RolesUsersController < WulinMaster::ScreenController
 
   controller_for_screen MasterUserDetailRoleScreen
 
-  add_callback :query_filters_ready, :adapter_filters
-  add_callback :query_initialized, :set_user_id_condition
-  add_callback :query_initialized, :set_role_id_condition
   add_callback :query_initialized, :preload_relations
+  add_callback :query_filters_ready, :adapter_filters
+  add_callback :query_ready, :set_user_id_condition
+  add_callback :query_ready, :set_role_id_condition
 
   if defined? Mima
     # Mima has User model
@@ -18,14 +18,7 @@ class RolesUsersController < WulinMaster::ScreenController
 
   def adapter_filters
     unless defined? Mima
-      where_sql = @query.where_clause.ast.children.reject do |node|
-        node.to_sql.include?("CAST(id AS TEXT)") || node.to_sql.include?("CAST(email AS TEXT)")
-      end
-
       @query = @query.except(:where)
-      where_sql.each do |cond|
-        @query = @query.where cond
-      end
     end
   end
 
