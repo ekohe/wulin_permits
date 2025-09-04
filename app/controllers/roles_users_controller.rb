@@ -1,116 +1,94 @@
 class RolesUsersController < WulinMaster::ScreenController
   before_action :require_admin
-
   controller_for_screen MasterUserDetailRoleScreen
 
-  add_callback :query_initialized, :preload_relations
-  add_callback :query_filters_ready, :adapter_filters
-  add_callback :query_ready, :set_user_id_condition
-  add_callback :query_ready, :set_role_id_condition
+  MIMA_TEMP_USERS_TABLE = "mima_users"
 
-  if defined? Mima
-    # Mima has User model
-  else
-    add_callback :objects_ready, :assign_email
+  add_callback :query_initialized, :preload_relations
+
+  unless defined? Mima
+    after_action :remove_mima_users
+    add_callback :query_initialized, :preload_users
+    add_callback :query_initialized, :apply_user_filter
+    add_callback :objects_ready, :assign_emails
   end
 
   private
 
-  def adapter_filters
-    unless defined? Mima
-      @query = @query.except(:where)
+  def apply_user_filter
+    if params[:screen] == "MasterUserDetailRoleScreen" && params[:grid] == "RolesUserGrid"
+      filter_params = params[:filters].find { |x| x.value?("user_id") }
+
+      return if filter_params.blank?
+
+      user_id = filter_params[:value]
+
+      params[:filters].delete filter_params
+
+      @query = @query.where("#{RolesUser.table_name}.user_id = ?", user_id)
     end
   end
 
   def preload_relations
-    if defined? Mima
-      @query = @query.includes(:role, :user)
+    @query = if defined? Mima
+      @query.includes(:role, :user)
     else
-      @query = @query.includes(:role)
+      @query.includes(:role)
     end
   end
 
-  def assign_email
+  def preload_users
     if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
-      # assign email
-    else
-      return
-    end
+      @query = @query.joins("INNER JOIN #{MIMA_TEMP_USERS_TABLE} ON #{MIMA_TEMP_USERS_TABLE}.id = #{RolesUser.table_name}.user_id")
+      @user_id_emails = {}
 
-    users = User.find_by_ids @objects.map(&:user_id).compact
+      ActiveRecord::Base.connection_pool.with_connection do |conn|
+        conn.execute "DROP TABLE IF EXISTS #{MIMA_TEMP_USERS_TABLE}"
+        conn.execute <<-SQL
+        CREATE TEMPORARY TABLE #{MIMA_TEMP_USERS_TABLE} (
+          id SERIAL PRIMARY KEY,
+          email VARCHAR(255)
+        );
+        SQL
+      end
 
-    email_dict = users.each_with_object({}) do |user, target|
-      target[user.id] = user.email
-    end
+      if params[:filters].present?
+        filter_params = params[:filters].find { |x| x.value?("role_id") }
+        return if filter_params.blank?
 
-    @objects.each do |user_role|
-      user_role.email = email_dict[user_role.user_id]
-    end
+        user_ids = grid.model.where(role_id: filter_params[:value]).pluck(:user_id)
 
-    # if email is empty, then we need to remove it
-    @objects.select! do |user_role|
-      user_role.email.present?
-    end
+        users = User.find_by_ids user_ids
 
-    @count_without_filter = @objects.count
+        ActiveRecord::Base.connection_pool.with_connection do |conn|
+          values = users.map do |user|
+            @user_id_emails[user.id] = user.email
+            "(#{user.id}, '#{user.email}')"
+          end.join(", ")
 
-    set_email_condition
-    set_email_sorting
-
-    @count = @objects.size
-  end
-
-  def set_email_sorting
-    sort_col, sort_dir = params.values_at :sort_col, :sort_dir
-    return if sort_col.blank?
-
-    if sort_col == "email"
-      case sort_dir
-      when /asc/i
-        @objects.sort! { |a, b|
-          if a.email && b.email
-            a.email <=> b.email
-          else
-            a.email ? -1 : 1
-          end
-        }
-      when /desc/i
-        @objects.sort! { |a, b|
-          if a.email && b.email
-            b.email <=> a.email
-          else
-            a.email ? -1 : 1
-          end
-        }
+          sql = "INSERT INTO #{MIMA_TEMP_USERS_TABLE} (id, email) VALUES #{values};"
+          ActiveRecord::Base.connection.execute(sql)
+        end
       end
     end
   end
 
-  def set_email_condition
-    email_filter_params = params[:filters].find { |x| x.value?("email") }
-    return if email_filter_params.blank?
-
-    @count_without_filter = @objects.size
-    @objects.select! do |user_role|
-      user_role.email.to_s =~ /#{email_filter_params[:value]}/i
+  def remove_mima_users
+    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
+      ActiveRecord::Base.connection_pool.with_connection do |conn|
+        conn.execute "DROP TABLE IF EXISTS #{MIMA_TEMP_USERS_TABLE}"
+      end
     end
-    @count = @objects.size
   end
 
-  def set_user_id_condition
-    return if params[:filters].blank?
-
-    user_filter_params = params[:filters].find { |x| x.value?("user_id") }
-    return if user_filter_params.blank?
-
-    @query = @query.where(user_id: user_filter_params[:value])
-  end
-
-  def set_role_id_condition
-    return if params[:filters].blank?
-
-    role_filter_params = params[:filters].find { |x| x.value?("role_id") }
-    return if role_filter_params.blank?
-    @query = @query.where(role_id: role_filter_params[:value])
+  def assign_emails
+    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
+      @objects = @objects.map do |obj|
+        if @user_id_emails[obj.user_id].present?
+          obj.email = @user_id_emails[obj.user_id]
+          obj
+        end
+      end.compact
+    end
   end
 end

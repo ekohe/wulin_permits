@@ -10,7 +10,7 @@ class RolesUserGrid < WulinMaster::Grid
   if defined? Mima
     column :email, through: :user, label: "User", editable: false, only: [:MasterRoleDetailUserScreen], formatter: "NullOverrideFormatter", value_to_replace_null: "Unknown User"
   else
-    column :email, label: "User", editable: false, only: [:MasterRoleDetailUserScreen], formatter: "NullOverrideFormatter", value_to_replace_null: "Unknown User"
+    column :email, label: "User", sort_column: "mima_users.email", editable: false, only: [:MasterRoleDetailUserScreen], formatter: "NullOverrideFormatter", value_to_replace_null: "Unknown User"
   end
 
   # actions for master sad detail role grid
