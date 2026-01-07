@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   resources :roles_users
   resources :permissions
 
-  get "roles/export_role_permission", to: "roles#export_role_permission"
-  post "roles/import_role_permission", to: "roles#import_role_permission"
-
   resources :roles do
     post :update_permission, as: :member
   end
+
+  get "privileges/export_privilege_permission", to: "privileges#export_privilege_permission"
+  post "privileges/import_privilege_permission", to: "privileges#import_privilege_permission"
 
   resources :permissions_roles
   resources :privileges
