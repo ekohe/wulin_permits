@@ -5,9 +5,12 @@ class UsersController < WulinMaster::ScreenController
   add_callback :query_ready, :set_request_uri
   add_callback :query_ready, :load_uninvited_users
   add_callback :objects_ready, :filter_for_role
+  add_callback :objects_ready, :filter_for_privilege
 
   NO_SMART_QUERY_SCREENS = %w[
     MasterUserDetailRoleScreen
+    MasterUserDetailPrivilegeScreen
+    MasterUserDetailPermissionScreen
     UserLocationScreen
     UserDepartmentScreen
   ].freeze
@@ -49,6 +52,18 @@ class UsersController < WulinMaster::ScreenController
     return if role_filter_params.blank?
 
     user_ids = RolesUser.where(:role_id => role_filter_params[:value]).pluck(:user_id).uniq
+
+    @objects = User.all
+
+    @objects.reject!{|x| user_ids.include?(x.id.to_i)} if user_ids.present?
+    @count = @objects.size
+  end
+
+  def filter_for_privilege
+    privilege_filter_params = params[:filters].to_a.find{|x| x.values.include?("privilege_id") and x.values.include?("exclude")}
+    return if privilege_filter_params.blank?
+
+    user_ids = UsersPrivilege.where(:privilege_id => privilege_filter_params[:value]).pluck(:user_id).uniq
 
     @objects = User.all
 
