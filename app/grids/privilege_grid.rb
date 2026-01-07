@@ -10,6 +10,9 @@ class PrivilegeGrid < WulinMaster::Grid
 
   load_default_actions({only: [:MasterRolePrivilegeScreen, :MasterPrivilegeRoleScreen]})
 
+  action :export_privilege_permission, title: 'Export Privilege Permission', icon: :file_download, only: [:PrivilegeScreen]
+  action :import_privilege_permission, title: 'Import Privilege Permission', icon: :file_upload, global: true, only: [:PrivilegeScreen]
+
   action :create, only: [:PrivilegeScreen]
   action :delete, only: [:PrivilegeScreen]
 
