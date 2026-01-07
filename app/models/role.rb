@@ -3,6 +3,8 @@ class Role < ::ActiveRecord::Base
   has_many :roles_users, dependent: :destroy
   has_many :permissions_roles, dependent: :destroy
   has_many :permissions, through: :permissions_roles
+  has_many :roles_privileges, dependent: :destroy
+  has_many :privileges, through: :roles_privileges
 
   def users
     User.find(roles_users.pluck(:user_id))

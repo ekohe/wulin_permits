@@ -1,8 +1,8 @@
-class RolesUsersController < WulinMaster::ScreenController
+class UsersPrivilegesController < WulinMaster::ScreenController
   before_action :require_admin
-  controller_for_screen MasterUserDetailRoleScreen
+  controller_for_screen MasterUserDetailPrivilegeScreen
 
-  MIMA_TEMP_USERS_TABLE = "disposable_roles_users"
+  MIMA_TEMP_USERS_TABLE = "disposable_users_privileges"
 
   add_callback :query_initialized, :preload_relations
 
@@ -20,7 +20,7 @@ class RolesUsersController < WulinMaster::ScreenController
   end
 
   def apply_user_filter
-    if params[:screen] == "MasterUserDetailRoleScreen" && params[:grid] == "RolesUserGrid"
+    if params[:screen] == "MasterUserDetailPrivilegeScreen" && params[:grid] == "UsersPrivilegeGrid"
       filter_params = params[:filters].find { |x| x.value?("user_id") }
 
       return if filter_params.blank?
@@ -29,21 +29,21 @@ class RolesUsersController < WulinMaster::ScreenController
 
       params[:filters].delete filter_params
 
-      @query = @query.where("#{RolesUser.table_name}.user_id = ?", user_id)
+      @query = @query.where("#{UsersPrivilege.table_name}.user_id = ?", user_id)
     end
   end
 
   def preload_relations
     @query = if defined? Mima
-      @query.includes(:role, :user)
+      @query.includes(:privilege, :user)
     else
-      @query.includes(:role)
+      @query.includes(:privilege)
     end
   end
 
   def preload_users
-    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
-      @query = @query.joins("INNER JOIN #{MIMA_TEMP_USERS_TABLE} ON #{MIMA_TEMP_USERS_TABLE}.id = #{RolesUser.table_name}.user_id")
+    if params[:screen] == "MasterPrivilegeDetailUserScreen" && params[:grid] == "UsersPrivilegeGrid"
+      @query = @query.joins("INNER JOIN #{MIMA_TEMP_USERS_TABLE} ON #{MIMA_TEMP_USERS_TABLE}.id = #{UsersPrivilege.table_name}.user_id")
       @user_id_emails = {}
 
       connection.execute "DROP TABLE IF EXISTS #{MIMA_TEMP_USERS_TABLE}"
@@ -55,10 +55,10 @@ class RolesUsersController < WulinMaster::ScreenController
       SQL
 
       if params[:filters].present?
-        filter_params = params[:filters].find { |x| x.value?("role_id") }
+        filter_params = params[:filters].find { |x| x.value?("privilege_id") }
         return if filter_params.blank?
 
-        user_ids = grid.model.where(role_id: filter_params[:value]).pluck(:user_id)
+        user_ids = grid.model.where(privilege_id: filter_params[:value]).pluck(:user_id)
 
         users = User.find_by_ids user_ids
 
@@ -76,13 +76,13 @@ class RolesUsersController < WulinMaster::ScreenController
   end
 
   def remove_mima_users
-    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
+    if params[:screen] == "MasterPrivilegeDetailUserScreen" && params[:grid] == "UsersPrivilegeGrid"
       connection.execute "DROP TABLE IF EXISTS #{MIMA_TEMP_USERS_TABLE}"
     end
   end
 
   def assign_emails
-    if params[:screen] == "MasterRoleDetailUserScreen" && params[:grid] == "RolesUserGrid"
+    if params[:screen] == "MasterPrivilegeDetailUserScreen" && params[:grid] == "UsersPrivilegeGrid"
       @objects = @objects.map do |obj|
         if @user_id_emails[obj.user_id].present?
           obj.email = @user_id_emails[obj.user_id]

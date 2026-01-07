@@ -8,7 +8,7 @@ class RoleGrid < WulinMaster::Grid
   column :name
   column :description
 
-  load_default_actions({only: [:MasterRoleDetailUserScreen]})
+  load_default_actions({only: [:MasterRoleDetailUserScreen, :MasterRolePrivilegeScreen]})
 
   action :export_role_permission, title: 'Export Role Permission', icon: :file_download, only: [:RoleScreen]
   action :import_role_permission, title: 'Import Role Permission', icon: :file_upload, global: true, only: [:RoleScreen]
