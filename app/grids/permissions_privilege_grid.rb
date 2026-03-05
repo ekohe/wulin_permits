@@ -6,7 +6,7 @@ class PermissionsPrivilegeGrid < WulinMaster::Grid
   path "/permissions_privileges"
 
   column :name, through: :permission, label: "Permission", editable: false, only: [:PrivilegeScreen]
-  column :description, through: :permission, only: [:PrivilegeScreen]
+  column :description, through: :permission, editable: false, only: [:PrivilegeScreen]
 
   column :name, through: :privilege, label: "Privilege", editable: false, only: [:MasterPermissionPrivilegeScreen]
 

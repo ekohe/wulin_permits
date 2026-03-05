@@ -6,7 +6,7 @@ class RolesPrivilegeGrid < WulinMaster::Grid
   path "/roles_privileges"
 
   column :name, through: :privilege, label: "Privilege", editable: false, only: [:MasterRolePrivilegeScreen]
-  column :description, through: :privilege, only: [:MasterRolePrivilegeScreen]
+  column :description, through: :privilege, editable: false, only: [:MasterRolePrivilegeScreen]
 
   column :name, through: :role, label: "Role", editable: false, only: [:PrivilegeScreen, :MasterPrivilegeRoleScreen]
 
