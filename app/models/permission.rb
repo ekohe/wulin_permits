@@ -1,4 +1,6 @@
 class Permission < ActiveRecord::Base
+  validates :name, presence: true, uniqueness: {case_sensitive: false}
+
   has_many :permissions_roles, dependent: :destroy
   has_many :roles, through: :permissions_roles
   has_many :roles_users, through: :roles
