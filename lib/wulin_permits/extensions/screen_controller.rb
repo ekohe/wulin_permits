@@ -16,6 +16,7 @@ module WulinPermits
       #
       def create_permissions
         return unless respond_to?(:current_user)
+        return unless current_user
 
         # admin should has the auto-created permission innately.
         current_user.admin? ? setup_permission_for_admin : permission_verify
