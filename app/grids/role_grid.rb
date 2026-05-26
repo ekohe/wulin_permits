@@ -7,6 +7,7 @@ class RoleGrid < WulinMaster::Grid
 
   column :name
   column :description
+  column :user_id, through: :roles_users, source: :user_id, visible: false, editable: false, formable: false, only: [:AddRoleForUserScreen]
 
   load_default_actions({only: [:MasterRoleDetailUserScreen, :MasterRolePrivilegeScreen]})
 

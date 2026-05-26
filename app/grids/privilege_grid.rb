@@ -7,6 +7,7 @@ class PrivilegeGrid < WulinMaster::Grid
 
   column :name
   column :description, width: 300
+  column :user_id, through: :users_privileges, source: :user_id, visible: false, editable: false, formable: false, only: [:AddPrivilegeForUserScreen]
 
   load_default_actions({only: [:MasterRolePrivilegeScreen, :MasterPrivilegeRoleScreen]})
 
