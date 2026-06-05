@@ -13,6 +13,7 @@ class UsersController < WulinMaster::ScreenController
     MasterUserDetailPermissionScreen
     UserLocationScreen
     UserDepartmentScreen
+    UserFrameTypeScreen
   ].freeze
 
   def render_json
