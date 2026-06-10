@@ -1,3 +1,5 @@
+require "set"
+
 class UsersController < WulinMaster::ScreenController
   before_action :require_admin
   controller_for_screen UserScreen
@@ -7,17 +9,16 @@ class UsersController < WulinMaster::ScreenController
   add_callback :objects_ready, :filter_for_role
   add_callback :objects_ready, :filter_for_privilege
 
-  NO_SMART_QUERY_SCREENS = %w[
+  class_attribute :no_smart_query_screens, default: Set.new(%w[
     MasterUserDetailRoleScreen
     MasterUserDetailPrivilegeScreen
     MasterUserDetailPermissionScreen
     UserLocationScreen
     UserDepartmentScreen
-    UserFrameTypeScreen
-  ].freeze
+  ])
 
   def render_json
-    return super unless NO_SMART_QUERY_SCREENS.include? params[:screen]
+    return super unless no_smart_query_screens.include?(params[:screen])
 
     query_response = @query.raw_response
     render_start_time = Time.current
