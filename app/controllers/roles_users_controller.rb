@@ -21,6 +21,8 @@ class RolesUsersController < WulinMaster::ScreenController
 
   def apply_user_filter
     if params[:screen] == "MasterUserDetailRoleScreen" && params[:grid] == "RolesUserGrid"
+      return if params[:filters].blank?
+
       filter_params = params[:filters].find { |x| x.value?("user_id") }
 
       return if filter_params.blank?

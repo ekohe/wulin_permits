@@ -21,6 +21,8 @@ class PermissionAllUsersController < WulinMaster::ScreenController
 
   def apply_permission_filter
     if params[:screen] == "MasterPermissionDetailUserScreen" && params[:grid] == "PermissionAllUserGrid"
+      return if params[:filters].blank?
+
       filter_params = params[:filters].find { |x| x.value?("permission_id") }
 
       return if filter_params.blank?
