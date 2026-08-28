@@ -14,12 +14,16 @@ class RolesUserGrid < WulinMaster::Grid
   end
 
   # actions for master sad detail role grid
-  action :add_detail, icon: :add_circle_outline, model: "role", screen: "AddRoleForUserScreen", title: "Attach Roles", only: [:MasterUserDetailRoleScreen]
-  action :delete, icon: :remove_circle_outline, title: "Remove Roles", only: [:MasterUserDetailRoleScreen]
+  action :add_detail, icon: :add_circle_outline, model: "role", screen: "AddRoleForUserScreen", title: "Attach Roles", only: [:MasterUserDetailRoleScreen],
+    authorized?: ->(user) { user.has_permission_with_name?(WulinPermits::UserManagement::SCREEN_CUD) }
+  action :delete, icon: :remove_circle_outline, title: "Remove Roles", only: [:MasterUserDetailRoleScreen],
+    authorized?: ->(user) { user.has_permission_with_name?(WulinPermits::UserManagement::SCREEN_CUD) }
 
   # actions for master service detail sad grid
-  action :add_detail, icon: :add_circle_outline, model: "user", screen: "AddUserForRoleScreen", title: "Attach Users", only: [:MasterRoleDetailUserScreen]
-  action :delete, icon: :remove_circle_outline, title: "Remove Users", only: [:MasterRoleDetailUserScreen]
+  action :add_detail, icon: :add_circle_outline, model: "user", screen: "AddUserForRoleScreen", title: "Attach Users", only: [:MasterRoleDetailUserScreen],
+    authorized?: ->(user) { user.has_permission_with_name?(WulinPermits::UserManagement::REVERSE_SCREEN_CUD) }
+  action :delete, icon: :remove_circle_outline, title: "Remove Users", only: [:MasterRoleDetailUserScreen],
+    authorized?: ->(user) { user.has_permission_with_name?(WulinPermits::UserManagement::REVERSE_SCREEN_CUD) }
 
   # Common actions
   action :export

@@ -5,7 +5,10 @@ class RolesUserScreen < WulinMaster::Screen
 
   grid RolesUserGrid, width: '500px', height: '250px'
 
-  def authorized?(user)
-    user.admin?
+  def authorized?(user = nil)
+    user ||= current_user
+    return false if user.blank?
+
+    user.has_permission_with_name?(WulinPermits::UserManagement::SCREEN_READ)
   end
 end

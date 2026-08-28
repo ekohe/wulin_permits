@@ -1,5 +1,4 @@
 class RolesUsersController < WulinMaster::ScreenController
-  before_action :require_admin
   controller_for_screen MasterUserDetailRoleScreen
 
   MIMA_TEMP_USERS_TABLE = "disposable_roles_users"
@@ -14,6 +13,15 @@ class RolesUsersController < WulinMaster::ScreenController
   end
 
   private
+
+  def setup_missing_permission
+    screen_param = params[:screen].to_s
+    if %w[MasterUserDetailRoleScreen RolesUserScreen].include?(screen_param) || screen_param.blank?
+      create_permission(cud? ? WulinPermits::UserManagement::SCREEN_CUD : WulinPermits::UserManagement::SCREEN_READ)
+    else
+      super
+    end
+  end
 
   def connection
     @connection ||= ActiveRecord::Base.connection

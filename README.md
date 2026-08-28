@@ -120,6 +120,22 @@ WulinPermits automatically protects all WulinMaster screens:
 - **CUD actions** require `screen_name#cud` permission
 - **Read actions** require `screen_name#read` permission
 
+## Users / Roles without admin
+
+`MasterUserDetailRoleScreen` is no longer admin-only. Assign these permissions to a privilege (for example "User Management") so non-admin users can manage app users:
+
+| Permission | What it unlocks |
+|---|---|
+| `master_user_detail_role#read` | Users / Roles screen and user list |
+| `master_user_detail_role#cud` | Attach / remove roles |
+| `master_role_detail_user#read` | Reverse Roles / Users view |
+| `master_role_detail_user#cud` | Attach / remove users from a role |
+| `users#invite` | Invite User (Create New User also needs `users#send_mail`) |
+| `users#send_mail` | Reset Account and the welcome email sent by Create New User |
+| `users#destroy` | Remove User |
+
+Apps must sign Mima user-management requests with the OAuth secret (`app_timestamp` + HMAC `app_signature`). Mima still requires admin when the signature is missing, so older apps keep working.
+
 ## Built-in Screens
 
 WulinPermits provides screens for managing the permission system:

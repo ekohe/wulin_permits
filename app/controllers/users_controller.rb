@@ -1,7 +1,6 @@
 require "set"
 
 class UsersController < WulinMaster::ScreenController
-  before_action :require_admin
   controller_for_screen UserScreen
 
   add_callback :query_ready, :set_request_uri
