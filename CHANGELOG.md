@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### Changed - Users / Roles for non-admins
+
+- `MasterUserDetailRoleScreen` uses standard screen permissions instead of `user.admin?`
+- `UsersController` and `RolesUsersController` no longer require admin; they enforce permissions
+- Invite / reset / delete stay hidden unless `users#invite`, `users#send_mail`, or `users#destroy` is granted
+- Migration `CreateUserManagementPermissions` inserts the required permission names
+
 ### Added - Privilege System
 
 Introduced a new **Privilege** concept to enhance the permissions model:

@@ -5,7 +5,11 @@ class UserScreen < WulinMaster::Screen
 
   grid UserGrid
 
-  def authorized?(user)
-    user.admin?
+  def authorized?(user = nil)
+    user ||= current_user
+    return false if user.blank?
+
+    user.has_permission_with_name?(WulinPermits::UserManagement::SCREEN_READ) ||
+      user.has_permission_with_name?(WulinPermits::UserManagement::INVITE)
   end
 end
