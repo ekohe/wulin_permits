@@ -19,7 +19,11 @@ module WulinPermits
     end
 
     initializer "append_assets" do |app|
-      app.config.assets.precompile += %w(role_screen.css wulin_permits.js)
+      if defined?(Propshaft)
+        # propshaft serves all assets automatically
+      else
+        app.config.assets.precompile += %w(role_screen.css wulin_permits.js)
+      end
     end
 
     initializer :append_migrations do |app|
