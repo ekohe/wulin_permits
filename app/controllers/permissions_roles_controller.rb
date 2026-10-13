@@ -1,3 +1,3 @@
 class PermissionsRolesController < WulinMaster::ScreenController
-  controller_for_screen MasterPermissionRoleScreen, RoleScreen
+  controller_for_screen MasterPermissionRoleScreen
 end
