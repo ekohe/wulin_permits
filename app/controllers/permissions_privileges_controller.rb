@@ -1,2 +1,3 @@
 class PermissionsPrivilegesController < WulinMaster::ScreenController
+  controller_for_screen MasterPermissionPrivilegeScreen, PrivilegeScreen
 end
