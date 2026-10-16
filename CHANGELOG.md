@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### Fixed - Permission views kept in db/schema.rb
+
+- Depends on `scenic`, which dumps the views `user_all_permissions` and `permission_all_users` into
+  `db/schema.rb`. A database loaded from it -- every test database -- had neither, and the
+  user/permission detail screens failed on a missing relation.
+
 ### Changed - Users / Roles for non-admins
 
 - `MasterUserDetailRoleScreen` uses standard screen permissions instead of `user.admin?`
