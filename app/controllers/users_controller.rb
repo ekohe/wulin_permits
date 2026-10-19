@@ -17,7 +17,9 @@ class UsersController < WulinMaster::ScreenController
   ])
 
   def render_json
-    return super unless no_smart_query_screens.include?(params[:screen])
+    # raw_response is the account app's JSON, stored on wulin_oauth's User. A local User has no
+    # such method, and calling it 500s these grids. They already hold @objects.
+    return super unless no_smart_query_screens.include?(params[:screen]) && @query.respond_to?(:raw_response)
 
     query_response = @query.raw_response
     render_start_time = Time.current
