@@ -13,6 +13,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "wulin_permits"
   gem.require_paths = ["lib"]
+
+  gem.required_ruby_version = ">= 3.4"
   gem.version       = WulinPermits::VERSION
 
   gem.add_dependency 'wulin_master'
