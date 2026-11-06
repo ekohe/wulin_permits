@@ -87,6 +87,10 @@ Running `rails db:migrate` automatically:
 - Migrates existing Role/Permission data to the new Privilege model
 - Creates SQL views (`user_all_permissions`, `permission_all_users`)
 
+Every permission check and the Permissions / Users screens read those views. `db/schema.rb` keeps
+them through `scenic` (a dependency of this gem), so commit the schema dumped after migrating -- a
+database loaded from a dump without them has neither view.
+
 ## Menu Configuration
 
 Add privilege management screens to your application menu:

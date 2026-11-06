@@ -9,19 +9,7 @@ module WulinPermits
           if self.respond_to?(:admin?) && self.admin?
             true
           else
-            # Try to use the user_all_permissions view if it exists
-            if defined?(UserAllPermission) && UserAllPermission.table_exists?
-              UserAllPermission.exists?(user_id: self.id, permission_id: permission.id)
-            else
-              Rails.logger.error("[CRITICAL] UserAllPermission view does not exist. Falling back to direct queries. Please run migrations.")
-              # Fallback: check permissions from both roles and privileges
-              has_permission_from_role = permission.roles_users.exists?(user_id: self.id)
-
-              privilege_ids = permission.permissions_privileges.pluck(:privilege_id)
-              has_permission_from_privilege = UsersPrivilege.exists?(user_id: self.id, privilege_id: privilege_ids)
-
-              has_permission_from_role || has_permission_from_privilege
-            end
+            UserAllPermission.exists?(user_id: self.id, permission_id: permission.id)
           end
         end
       end
