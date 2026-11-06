@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
   `permission_all_users` again. An app whose `db/schema.rb` was dumped before `scenic` arrived holds
   no views, so a database loaded from it had none and every migration marked as run. Run
   `db:migrate` once; the next dump then carries both views.
+- `User#has_permission?` reads `user_all_permissions` only. Its fallback for a missing view went
+  through the legacy `permissions_roles` table rather than roles' privileges, so it could answer
+  differently from the view; it only logged `[CRITICAL]`, which is how the missing views went
+  unnoticed.
 
 ### Fixed - Permission views kept in db/schema.rb
 
