@@ -1,4 +1,5 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in wulin_permits.gemspec
 gemspec
+
+gem "wulin_master", git: "git@gitlab.ekohe.com:ekohe/wulin/wulin_master.git", branch: "v3"
