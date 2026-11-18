@@ -2,7 +2,44 @@
 
 A flexible permissions management gem for WulinMaster applications with privilege-based access control.
 
-## Overview
+## Installation
+
+Add the submodule on `develop`, then reference it in the `Gemfile`:
+
+```bash
+git submodule add -b develop git@gitlab.ekohe.com:ekohe/wulin/wulin_permits.git vendor/gems/wulin_permits
+```
+
+```ruby
+gem "wulin_permits", path: "vendor/gems/wulin_permits"
+```
+
+Then:
+
+```bash
+bundle install
+rails db:migrate                      # creates tables and views
+rake wulin_permits:load_permission    # loads permissions from screens and routes
+```
+
+Import the JavaScript in `app/javascript/application.js`:
+
+```js
+import "../../vendor/gems/wulin_permits/app/javascript/wulin_permits.esm.js"
+```
+
+Add the screens to the menu (see Menu Configuration below).
+
+### What the Migration Does
+
+Running `rails db:migrate` automatically:
+- Creates privilege tables (`privileges`, `roles_privileges`, `users_privileges`, `permissions_privileges`)
+- Migrates existing Role/Permission data to the new Privilege model
+- Creates SQL views (`user_all_permissions`, `permission_all_users`)
+
+## Usage
+
+### Overview
 
 WulinPermits provides a four-tier permission system with two permission paths:
 
@@ -17,7 +54,7 @@ This allows you to:
 - Grant privileges directly to users for fine-grained exceptions
 - Inherit permissions from multiple sources (roles and direct privileges)
 
-## Architecture
+### Architecture
 
 ```
 ┌─────────┐      ┌─────────┐      ┌────────────┐      ┌─────────────┐
@@ -38,9 +75,9 @@ This allows you to:
 - `user_all_permissions` - Aggregates all permissions for a user from roles and privileges
 - `permission_all_users` - Aggregates all users who have a specific permission
 
-## Core Concepts
+### Core Concepts
 
-### Permissions
+#### Permissions
 The most granular level - specific actions users can perform.
 
 **Auto-generated format:**
@@ -50,44 +87,21 @@ The most granular level - specific actions users can perform.
 
 **Examples:** `user#read`, `user#cud`, `reports#export`
 
-### Privileges
+#### Privileges
 Bundles of related permissions that can be assigned to roles or users directly.
 
 **Example:** A "User Management" privilege might include `user#read`, `user#cud`, `roles_user#read`, etc.
 
-### Roles
+#### Roles
 Named collections of privileges (e.g., Admin, Manager, Viewer). Roles provide a way to group privileges for easier assignment to multiple users.
 
-### Users
+#### Users
 Get permissions through:
 1. Admin status (`user.admin? == true`) - bypasses all checks
 2. Assigned roles (inherit all role → privilege → permissions)
 3. Direct privilege assignment (privilege → permissions)
 
-## Installation
-
-```bash
-# 1. Add to Gemfile
-gem 'wulin_permits', path: 'vendor/gems/wulin_permits'
-
-# 2. Install
-bundle install
-
-# 3. Run migrations (creates tables and views automatically)
-rails db:migrate
-
-# 4. Load permissions from screens and routes
-rake wulin_permits:load_permission
-```
-
-### What the Migration Does
-
-Running `rails db:migrate` automatically:
-- Creates privilege tables (`privileges`, `roles_privileges`, `users_privileges`, `permissions_privileges`)
-- Migrates existing Role/Permission data to the new Privilege model
-- Creates SQL views (`user_all_permissions`, `permission_all_users`)
-
-## Menu Configuration
+### Menu Configuration
 
 Add privilege management screens to your application menu:
 
@@ -110,7 +124,7 @@ submenu "Access Control" do
 end
 ```
 
-## Automatic Permission Enforcement
+### Automatic Permission Enforcement
 
 WulinPermits automatically protects all WulinMaster screens:
 
@@ -120,7 +134,7 @@ WulinPermits automatically protects all WulinMaster screens:
 - **CUD actions** require `screen_name#cud` permission
 - **Read actions** require `screen_name#read` permission
 
-## Users / Roles without admin
+### Users / Roles without admin
 
 `MasterUserDetailRoleScreen` is no longer admin-only. Assign these permissions to a privilege (for example "User Management") so non-admin users can manage app users:
 
@@ -136,17 +150,17 @@ WulinPermits automatically protects all WulinMaster screens:
 
 Apps must sign Mima user-management requests with the OAuth secret (`app_timestamp` + HMAC `app_signature`). Mima still requires admin when the signature is missing, so older apps keep working.
 
-## Built-in Screens
+### Built-in Screens
 
 WulinPermits provides screens for managing the permission system:
 
-### Primary Screens
+#### Primary Screens
 - `UserScreen` - User management
 - `RoleScreen` - Role management
 - `PrivilegeScreen` - Privilege management with attached permissions
 - `PermissionScreen` - Permission management
 
-### Master-Detail Screens
+#### Master-Detail Screens
 - `MasterUserDetailRoleScreen` - Users with their Roles
 - `MasterUserDetailPrivilegeScreen` - Users with their Privileges
 - `MasterUserDetailPermissionScreen` - Users with all Permissions (via view)
@@ -157,7 +171,7 @@ WulinPermits provides screens for managing the permission system:
 - `MasterPermissionDetailUserScreen` - Permissions with all Users (via view)
 - `MasterPermissionPrivilegeScreen` - Permissions with their Privileges
 
-### Assignment Screens
+#### Assignment Screens
 - `AddRoleForUserScreen` - Attach roles to a user
 - `AddUserForRoleScreen` - Attach users to a role
 - `AddPrivilegeForUserScreen` - Attach privileges to a user
@@ -167,7 +181,7 @@ WulinPermits provides screens for managing the permission system:
 - `AddPermissionToPrivilegeScreen` - Attach permissions to a privilege
 - `AddPrivilegeToPermissionScreen` - Attach privileges to a permission
 
-## Troubleshooting
+### Troubleshooting
 
 **Users can't access screens:**
 1. Check: `user.admin?`
@@ -183,14 +197,15 @@ WulinPermits provides screens for managing the permission system:
 - Run: `rails db:migrate` (views are created by migrations)
 - Check that `db/views/*.sql` files exist
 
-## Contributing
+## Development
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Ruby 4.0.9, Rails 8.1. The gem has no test suite. CI builds the gem:
 
-## Credits
+```bash
+bundle install
+gem build wulin_permits.gemspec
+```
 
-Developed by [ekohe](mailto:dev@ekohe.com) for the WulinMaster framework.
+## License
+
+MIT, see `LICENSE`.
