@@ -21,7 +21,7 @@ The README Installation section lists the steps: the `Gemfile` path entry, `rail
 
 ## Commands
 
-The gem has no test suite. CI builds the gem. Use Ruby 4.0.9.
+The gem has no test suite. CI builds the gem. Use Ruby 4.0.10.
 
 ```bash
 bundle install
